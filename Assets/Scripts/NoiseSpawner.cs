@@ -36,8 +36,7 @@ public class NoiseSpawner : MonoBehaviour
             float worldX = terrainPosition.x + x;
             float worldZ = terrainPosition.z + z;
 
-            float noise = Mathf.PerlinNoise(worldX / terrainSize.x * scale,
-                worldZ / terrainSize.z * scale);
+            float noise = Mathf.PerlinNoise(worldX / terrainSize.x * scale, worldZ / terrainSize.z * scale);
 
             if (noise > threshold)
             {
@@ -56,7 +55,7 @@ public class NoiseSpawner : MonoBehaviour
 
                 if (!tooClose)
                 {
-                    GameObject obj = Instantiate(prefab, spawnPos, Quaternion.identity);
+                    GameObject obj = Instantiate(prefab, spawnPos, prefab.transform.rotation);
                     spawnedPositions.Add(spawnPos);
 
                     float normalizedNoise = Mathf.InverseLerp(threshold, 1f, noise);
@@ -66,17 +65,22 @@ public class NoiseSpawner : MonoBehaviour
 
                     Vector3 baseScale = prefab.transform.localScale;
                     obj.transform.localScale = baseScale * finalScale;
+
                     int randSeed = Random.Range(0, 5);
                     if (randSeed > 2)
                     {
                         float radius = 8f;
                         float angle = Random.Range(0f, Mathf.PI * 2f);
                         float distance = Random.Range(6f, radius);
+
                         spawnPos.y += 0.5f;
-                        Vector3 randomPos = spawnPos +
-                                            new Vector3(Mathf.Cos(angle) * distance, 0f, Mathf.Sin(angle) * distance);
+
+                        Vector3 randomPos = spawnPos + new Vector3(Mathf.Cos(angle) * distance, 0f, Mathf.Sin(angle) * distance);
+
                         randomPos.y = terrain.SampleHeight(randomPos);
-                        GameObject obj2 = Instantiate(prefabAround, randomPos, Quaternion.identity);
+
+                        GameObject obj2 = Instantiate(prefabAround, randomPos, prefabAround.transform.rotation);
+
                         float finalScale2 = Mathf.Lerp(minScale2, maxScale2, normalizedNoise);
 
                         Vector3 baseScale2 = prefabAround.transform.localScale;
