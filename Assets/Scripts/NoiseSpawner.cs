@@ -4,7 +4,7 @@ using UnityEngine;
 public class NoiseSpawner : MonoBehaviour
 {
     public Terrain terrain;
-    public GameObject prefab;
+    public GameObject[] prefab;
     public GameObject prefabAround;
     public int density = 5000;
     public float scale = 20f;
@@ -41,7 +41,7 @@ public class NoiseSpawner : MonoBehaviour
             if (noise > threshold)
             {
                 float y = terrain.SampleHeight(new Vector3(worldX, 0, worldZ));
-                Vector3 spawnPos = new Vector3(worldX, y - 1f, worldZ);
+                Vector3 spawnPos = new Vector3(worldX, y + Vector3.down.y, worldZ);
 
                 bool tooClose = false;
                 foreach (Vector3 pos in spawnedPositions)
@@ -55,7 +55,10 @@ public class NoiseSpawner : MonoBehaviour
 
                 if (!tooClose)
                 {
-                    GameObject obj = Instantiate(prefab, spawnPos, prefab.transform.rotation);
+                    int randomPrefabIndex = Random.Range(0, prefab.Length);
+                    GameObject selectedPrefab = prefab[randomPrefabIndex];
+
+                    GameObject obj = Instantiate(selectedPrefab, spawnPos, selectedPrefab.transform.rotation);
                     spawnedPositions.Add(spawnPos);
 
                     float normalizedNoise = Mathf.InverseLerp(threshold, 1f, noise);
@@ -63,7 +66,7 @@ public class NoiseSpawner : MonoBehaviour
 
                     float finalScale = Mathf.Lerp(minScale, maxScale, normalizedNoise);
 
-                    Vector3 baseScale = prefab.transform.localScale;
+                    Vector3 baseScale = selectedPrefab.transform.localScale;
                     obj.transform.localScale = baseScale * finalScale;
 
                     int randSeed = Random.Range(0, 5);
