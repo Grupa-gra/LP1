@@ -8,13 +8,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mushroom_simple_orange
-  m_Shader: {fileID: -6465566751694194690, guid: 9920c1f1781549a46ba081a2a15a16ec, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0f4122b9a743b744abe2fb6a0a88868b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - BACKFACE_NORMAL_MODE_MIRROR
-  - _WINDQUALITY_BEST
-  m_InvalidKeywords: []
+  - EFFECT_BUMP
+  - EFFECT_HUE_VARIATION
+  m_InvalidKeywords:
+  - _WINDQUALITY_FASTEST
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -29,12 +30,20 @@ Material:
         m_Texture: {fileID: 2800000, guid: 59fb094c65b0cbf41bd0d0e5f743fb2f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DetailTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ExtraTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 3a296ad70e1185c47a05d5ac431842c4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecColorTexture:
@@ -60,9 +69,14 @@ Material:
     m_Ints: []
     m_Floats:
     - BACKFACE_NORMAL_MODE: 1
+    - Backface_Normal_Mode: 0
     - EFFECT_BILLBOARD: 0
     - EFFECT_EXTRA_TEX: 1
     - _AlphaClipThreshold: 0.33
+    - _BillboardKwToggle: 0
+    - _BillboardShadowFade: 0.5
+    - _Cull: 2
+    - _Cutoff: 0.333
     - _Glossiness: 0.5
     - _HueVariationKwToggle: 1
     - _Metallic: 0
@@ -74,10 +88,17 @@ Material:
     - _Shininess: 0.612468
     - _SubsurfaceIndirect: 0.25
     - _SubsurfaceKwToggle: 0
+    - _TwoSided: 2
     - _WINDQUALITY: 4
+    - _WIND_BRANCH1: 0
+    - _WIND_BRANCH2: 0
+    - _WIND_RIPPLE: 0
+    - _WIND_SHARED: 0
+    - _WIND_SHIMMER: 0
     - _WindQuality: 1
     m_Colors:
     - _Color: {r: 0.88235295, g: 0.88235295, b: 0.88235295, a: 1}
+    - _HueVariation: {r: 0.2991913, g: 0.1501823, b: 0, a: 0.1}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.5176471}
     - _RimColor: {r: 0.24313726, g: 0.18097517, b: 0.099161856, a: 0}
     - _SpecColor: {r: 0.17254902, g: 0.17254902, b: 0.17254902, a: 1}
