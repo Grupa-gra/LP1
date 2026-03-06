@@ -97,8 +97,8 @@ Material:
     - _WIND_SHIMMER: 0
     - _WindQuality: 1
     m_Colors:
-    - _Color: {r: 0.88235295, g: 0.88235295, b: 0.88235295, a: 1}
-    - _HueVariation: {r: 0.2991913, g: 0.1501823, b: 0, a: 0.1}
+    - _Color: {r: 0.6819406, g: 0.6819406, b: 0.6819406, a: 1}
+    - _HueVariation: {r: 0.29919127, g: 0.15018228, b: 0, a: 0.5647059}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.5176471}
     - _RimColor: {r: 0.24313726, g: 0.18097517, b: 0.099161856, a: 0}
     - _SpecColor: {r: 0.17254902, g: 0.17254902, b: 0.17254902, a: 1}

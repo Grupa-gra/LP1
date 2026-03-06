@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mushroom_spiral_brown
-  m_Shader: {fileID: 4800000, guid: 112d9d617c18b154393ad8e4b23a6ade, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0f4122b9a743b744abe2fb6a0a88868b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -27,6 +27,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 2d6f7f38210ec0345840cd41ed07bea8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DetailTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: e345605476a915a4f83594139056a95c, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -37,11 +41,28 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Cull: 2
+    - _Cutoff: 0.333
     - _RimPower: 1.6607143
     - _Shininess: 0.5001344
+    - _WindQuality: 0
     m_Colors:
     - _Color: {r: 0.88235295, g: 0.88235295, b: 0.88235295, a: 1}
+    - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _RimColor: {r: 0.15686275, g: 0.12435072, b: 0.09165706, a: 0}
     - _SpecColor: {r: 0.08088237, g: 0.08088237, b: 0.08088237, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!114 &4667582187619852353
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 9

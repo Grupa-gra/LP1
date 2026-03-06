@@ -1,11 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class SpawnItem
+{
+    public GameObject prefab;
+    public float rarity = 10f;
+}
+
 public class NoiseSpawner : MonoBehaviour
 {
     public Terrain terrain;
-    public GameObject[] prefab;
-    public GameObject prefabAround;
+    public SpawnItem[] prefabs;
+    public SpawnItem[] prefabsAround;
     public int density = 5000;
     public float scale = 20f;
     public float threshold = 0.4f;
@@ -22,11 +29,39 @@ public class NoiseSpawner : MonoBehaviour
         Spawn();
     }
 
+    GameObject GetRandomPrefab(SpawnItem[] items)
+    {
+        float totalWeight = 0f;
+        foreach (SpawnItem item in items)
+        {
+            totalWeight += item.rarity;
+        }
+
+        float randomValue = Random.Range(0f, totalWeight);
+        float currentWeight = 0f;
+
+        foreach (SpawnItem item in items)
+        {
+            currentWeight += item.rarity;
+            if (randomValue <= currentWeight)
+            {
+                return item.prefab;
+            }
+        }
+
+        return items[0].prefab;
+    }
+
     void Spawn()
     {
         TerrainData data = terrain.terrainData;
         Vector3 terrainSize = data.size;
         Vector3 terrainPosition = terrain.transform.position;
+
+        if (prefabs == null || prefabs.Length == 0)
+        {
+            return;
+        }
 
         for (int i = 0; i < density; i++)
         {
@@ -55,10 +90,16 @@ public class NoiseSpawner : MonoBehaviour
 
                 if (!tooClose)
                 {
-                    int randomPrefabIndex = Random.Range(0, prefab.Length);
-                    GameObject selectedPrefab = prefab[randomPrefabIndex];
+                    float normX = x / terrainSize.x;
+                    float normZ = z / terrainSize.z;
+                    Vector3 terrainNormal = data.GetInterpolatedNormal(normX, normZ);
 
-                    GameObject obj = Instantiate(selectedPrefab, spawnPos, selectedPrefab.transform.rotation);
+                    GameObject selectedPrefab = GetRandomPrefab(prefabs);
+
+                    Quaternion terrainRotation = Quaternion.FromToRotation(Vector3.up, terrainNormal);
+                    Quaternion finalRotation = terrainRotation * selectedPrefab.transform.rotation;
+
+                    GameObject obj = Instantiate(selectedPrefab, spawnPos, finalRotation);
                     spawnedPositions.Add(spawnPos);
 
                     float normalizedNoise = Mathf.InverseLerp(threshold, 1f, noise);
@@ -70,7 +111,7 @@ public class NoiseSpawner : MonoBehaviour
                     obj.transform.localScale = baseScale * finalScale;
 
                     int randSeed = Random.Range(0, 5);
-                    if (randSeed > 2)
+                    if (randSeed > 2 && prefabsAround != null && prefabsAround.Length > 0)
                     {
                         float radius = 8f;
                         float angle = Random.Range(0f, Mathf.PI * 2f);
@@ -78,15 +119,26 @@ public class NoiseSpawner : MonoBehaviour
 
                         spawnPos.y += 0.5f;
 
-                        Vector3 randomPos = spawnPos + new Vector3(Mathf.Cos(angle) * distance, 0f, Mathf.Sin(angle) * distance);
+                        float offsetX = Mathf.Cos(angle) * distance;
+                        float offsetZ = Mathf.Sin(angle) * distance;
 
+                        Vector3 randomPos = spawnPos + new Vector3(offsetX, 0f, offsetZ);
                         randomPos.y = terrain.SampleHeight(randomPos);
 
-                        GameObject obj2 = Instantiate(prefabAround, randomPos, prefabAround.transform.rotation);
+                        float normAroundX = (x + offsetX) / terrainSize.x;
+                        float normAroundZ = (z + offsetZ) / terrainSize.z;
+                        Vector3 terrainNormal2 = data.GetInterpolatedNormal(normAroundX, normAroundZ);
+
+                        GameObject selectedPrefabAround = GetRandomPrefab(prefabsAround);
+
+                        Quaternion terrainRotation2 = Quaternion.FromToRotation(Vector3.up, terrainNormal2);
+                        Quaternion finalRotation2 = terrainRotation2 * selectedPrefabAround.transform.rotation;
+
+                        GameObject obj2 = Instantiate(selectedPrefabAround, randomPos, finalRotation2);
 
                         float finalScale2 = Mathf.Lerp(minScale2, maxScale2, normalizedNoise);
 
-                        Vector3 baseScale2 = prefabAround.transform.localScale;
+                        Vector3 baseScale2 = selectedPrefabAround.transform.localScale;
                         obj2.transform.localScale = baseScale2 * finalScale2;
                     }
                 }
