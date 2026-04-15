@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23157088951203930}
   - component: {fileID: 64497631728594298}
   - component: {fileID: 456636526702933099}
+  - component: {fileID: 4789764388891422341}
   m_Layer: 0
   m_Name: pineTree
   m_TagString: Untagged
@@ -134,3 +135,19 @@ CapsuleCollider:
   m_Height: 8.119809
   m_Direction: 1
   m_Center: {x: 0.04353249, y: 4.0599046, z: -0.10531759}
+--- !u!208 &4789764388891422341
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550140418629916}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.47, y: 4.325, z: 1.47}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.044000003, y: 4.0600004, z: -0.105000004}
+  m_TimeToStationary: 0.5
