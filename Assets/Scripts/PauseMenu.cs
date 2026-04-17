@@ -6,6 +6,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseUI;
     private bool isPaused = false;
     public MonoBehaviour PlayerMovement;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -43,6 +44,12 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
+    }
+
+    public void Retry()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitGame()
