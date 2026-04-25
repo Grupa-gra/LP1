@@ -27,6 +27,12 @@ public class NoiseSpawner : MonoBehaviour
     [Tooltip("0 = prosto w górê, 1 = idealnie przylega do pochy³oœci terenu")]
     public float terrainAlignment = 0.5f;
 
+    [Header("Obszary wykluczone (No-Spawn Zones)")]
+    [Tooltip("Warstwa, na której znajduj¹ siê obiekty blokuj¹ce spawn (np. cylindry)")]
+    public LayerMask noSpawnLayer;
+    [Tooltip("Promieñ sprawdzania kolizji wokó³ punktu spawnu")]
+    public float checkRadius = 1.5f;
+
     private List<Vector3> spawnedPositions = new List<Vector3>();
 
     void Start()
@@ -83,6 +89,11 @@ public class NoiseSpawner : MonoBehaviour
                 float y = terrain.SampleHeight(new Vector3(worldX, 0, worldZ));
                 Vector3 spawnPos = new Vector3(worldX, y + Vector3.down.y, worldZ);
 
+                if (Physics.CheckSphere(spawnPos, checkRadius, noSpawnLayer))
+                {
+                    continue;
+                }
+
                 bool tooClose = false;
                 foreach (Vector3 pos in spawnedPositions)
                 {
@@ -130,21 +141,24 @@ public class NoiseSpawner : MonoBehaviour
                         Vector3 randomPos = spawnPos + new Vector3(offsetX, 0f, offsetZ);
                         randomPos.y = terrain.SampleHeight(randomPos);
 
-                        float normAroundX = (x + offsetX) / terrainSize.x;
-                        float normAroundZ = (z + offsetZ) / terrainSize.z;
-                        Vector3 terrainNormal2 = data.GetInterpolatedNormal(normAroundX, normAroundZ);
-                        Vector3 blendedNormal2 = Vector3.Slerp(Vector3.up, terrainNormal2, terrainAlignment).normalized;
+                        if (!Physics.CheckSphere(randomPos, checkRadius, noSpawnLayer))
+                        {
+                            float normAroundX = (x + offsetX) / terrainSize.x;
+                            float normAroundZ = (z + offsetZ) / terrainSize.z;
+                            Vector3 terrainNormal2 = data.GetInterpolatedNormal(normAroundX, normAroundZ);
+                            Vector3 blendedNormal2 = Vector3.Slerp(Vector3.up, terrainNormal2, terrainAlignment).normalized;
 
-                        GameObject selectedPrefabAround = GetRandomPrefab(prefabsAround);
-                        Quaternion terrainRotation2 = Quaternion.FromToRotation(Vector3.up, blendedNormal2);
-                        Quaternion finalRotation2 = terrainRotation2 * selectedPrefabAround.transform.rotation;
+                            GameObject selectedPrefabAround = GetRandomPrefab(prefabsAround);
+                            Quaternion terrainRotation2 = Quaternion.FromToRotation(Vector3.up, blendedNormal2);
+                            Quaternion finalRotation2 = terrainRotation2 * selectedPrefabAround.transform.rotation;
 
-                        GameObject obj2 = Instantiate(selectedPrefabAround, randomPos, finalRotation2);
+                            GameObject obj2 = Instantiate(selectedPrefabAround, randomPos, finalRotation2);
 
-                        float finalScale2 = Mathf.Lerp(minScale2, maxScale2, normalizedNoise);
+                            float finalScale2 = Mathf.Lerp(minScale2, maxScale2, normalizedNoise);
 
-                        Vector3 baseScale2 = selectedPrefabAround.transform.localScale;
-                        obj2.transform.localScale = baseScale2 * finalScale2;
+                            Vector3 baseScale2 = selectedPrefabAround.transform.localScale;
+                            obj2.transform.localScale = baseScale2 * finalScale2;
+                        }
                     }
                 }
             }

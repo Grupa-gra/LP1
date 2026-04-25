@@ -26,13 +26,18 @@ public class GuardNoedifyAI : MonoBehaviour
     public float sprintHearMultiplier = 5f;
     public float crouchHearMultiplier = 0.3f;
 
+    [Header("Investigate Settings (Wyostrzone zmys³y)")]
+    public float investigateViewMultiplier = 1.5f;
+    public float investigateAngleMultiplier = 1.5f;
+    public float investigateHearMultiplier = 1.5f;
+
     [Header("Game Over Settings")]
     public float captureDistance = 1.5f;
     public GameObject deathUIScreen;
 
     [Header("Patrol System")]
     public Transform[] patrolPoints;
-    public float waitAtPointTime = 0.5f; // Zmniejszono czekanie na punkcie
+    public float waitAtPointTime = 0.5f;
     private int currentPointIndex = 0;
     private float waitTimer = 0f;
     private bool isWaiting = false;
@@ -57,8 +62,6 @@ public class GuardNoedifyAI : MonoBehaviour
     private enum Action { Patrol = 0, Investigate = 1, Chase = 2 }
     private int currentAction = 0;
     private float actionLockTimer = 0f;
-
-    // Zmniejszono blokadê akcji, aby szybciej "wskakiwa³" w poœcig
     private float minActionTime = 0.2f;
 
     void Start()
@@ -69,11 +72,10 @@ public class GuardNoedifyAI : MonoBehaviour
 
         if (deathUIScreen != null) deathUIScreen.SetActive(false);
 
-        // --- NAPRAWA SKRÊCANIA ---
         if (agent != null)
         {
-            agent.angularSpeed = 600f; // B³yskawiczny obrót wokó³ w³asnej osi
-            agent.autoBraking = false; // Zapobiega dziwnym zwolnieniom przed celem
+            agent.angularSpeed = 600f;
+            agent.autoBraking = false; 
         }
 
         lastKnownPosition = transform.position;
@@ -242,7 +244,12 @@ public class GuardNoedifyAI : MonoBehaviour
     float[] GetInputs()
     {
         float dist = Vector3.Distance(transform.position, player.position);
-        float distanceNorm = Mathf.Clamp01(dist / (viewDistance * sprintMultiplier));
+
+        float currentMaxView = viewDistance;
+        if (Input.GetKey(KeyCode.LeftShift)) currentMaxView *= sprintMultiplier;
+        if (currentAction == (int)Action.Investigate) currentMaxView *= investigateViewMultiplier;
+
+        float distanceNorm = Mathf.Clamp01(dist / currentMaxView);
         float visible = IsPlayerVisible() ? 1f : 0f;
         float memoryDist = Vector3.Distance(transform.position, lastKnownPosition);
         float memoryNorm = Mathf.Clamp01(memoryDist / viewDistance);
@@ -254,6 +261,8 @@ public class GuardNoedifyAI : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift)) currentHearDistance *= sprintHearMultiplier;
             else if (Input.GetKey(KeyCode.LeftControl)) currentHearDistance *= crouchHearMultiplier;
 
+            if (currentAction == (int)Action.Investigate) currentHearDistance *= investigateHearMultiplier;
+
             hearingVolume = Mathf.Clamp01(1f - (dist / currentHearDistance));
         }
 
@@ -264,10 +273,20 @@ public class GuardNoedifyAI : MonoBehaviour
     {
         Vector3 dir = player.position - transform.position;
         float dist = dir.magnitude;
-        float currentMaxDist = Input.GetKey(KeyCode.LeftShift) ? viewDistance * sprintMultiplier : viewDistance;
+
+        float currentMaxDist = viewDistance;
+        float currentViewAngle = viewAngle;
+
+        if (Input.GetKey(KeyCode.LeftShift)) currentMaxDist *= sprintMultiplier;
+
+        if (currentAction == (int)Action.Investigate)
+        {
+            currentMaxDist *= investigateViewMultiplier;
+            currentViewAngle *= investigateAngleMultiplier;
+        }
 
         if (dist > currentMaxDist) return false;
-        if (Vector3.Angle(transform.forward, dir) > viewAngle * 0.5f) return false;
+        if (Vector3.Angle(transform.forward, dir) > currentViewAngle * 0.5f) return false;
 
         Vector3 eyePos = transform.position + Vector3.up * 1.5f;
         Vector3 targetPos = player.position + Vector3.up * 1.5f;
@@ -285,6 +304,11 @@ public class GuardNoedifyAI : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift)) currentHearDistance *= sprintHearMultiplier;
         else if (Input.GetKey(KeyCode.LeftControl)) currentHearDistance *= crouchHearMultiplier;
+
+        if (currentAction == (int)Action.Investigate)
+        {
+            currentHearDistance *= investigateHearMultiplier;
+        }
 
         if (dist <= currentHearDistance)
         {
@@ -312,8 +336,12 @@ public class GuardNoedifyAI : MonoBehaviour
     void Patrol()
     {
         if (!agent.isOnNavMesh || patrolPoints.Length == 0) return;
+
+        agent.updateRotation = true;
+        agent.isStopped = false;
+
         agent.speed = 2.5f * moveSpeedMultiplier;
-        agent.acceleration = 10f; // LuŸne spacery
+        agent.acceleration = 10f;
 
         if (!agent.pathPending && agent.remainingDistance < 0.7f)
         {
@@ -337,15 +365,23 @@ public class GuardNoedifyAI : MonoBehaviour
     {
         if (!agent.isOnNavMesh) return;
         isWaiting = false;
-        agent.speed = 3.5f * moveSpeedMultiplier;
-        agent.acceleration = 20f; // Trochê ¿wawiej siê obraca
 
-        agent.SetDestination(lastKnownPosition);
+        agent.updateRotation = true;
+        agent.isStopped = false;
 
-        if (!agent.pathPending && agent.remainingDistance < 1f)
+        // USUÑ: currentAction = (int)Action.Patrol;
+        // USUÑ: suspicion = 0f;
+        // Sieæ neuronowa sama zmieni stan na Patrol, gdy suspicion powoli opadnie w UpdateSuspicionOverTime!
+
+        // Ustawiamy cel na najbli¿szy punkt patrolowy TYLKO, jeœli jeszcze go nie obraliœmy.
+        // Dziêki temu agent nie bêdzie co klatkê przelicza³ œcie¿ki od nowa.
+        if (Vector3.Distance(agent.destination, patrolPoints[currentPointIndex].position) > 1.0f)
         {
-            suspicion -= Time.deltaTime * 1.5f;
-            if (suspicion <= 0.1f) FindClosestPatrolPoint();
+            FindClosestPatrolPoint();
+            if (patrolPoints.Length > 0)
+            {
+                agent.SetDestination(patrolPoints[currentPointIndex].position);
+            }
         }
     }
 
@@ -353,8 +389,12 @@ public class GuardNoedifyAI : MonoBehaviour
     {
         if (!agent.isOnNavMesh) return;
         isWaiting = false;
+
+        agent.updateRotation = true;
+        agent.isStopped = false;
+
         agent.speed = 6.5f * moveSpeedMultiplier;
-        agent.acceleration = 35f; // B³yskawiczne zrywy przy poœcigu, likwiduje "je¿d¿enie po lodzie"
+        agent.acceleration = 35f;
 
         if (IsPlayerVisible() || CanHearPlayer())
         {
@@ -363,7 +403,12 @@ public class GuardNoedifyAI : MonoBehaviour
         }
         else
         {
-            agent.SetDestination(lastKnownPosition);
+            // ID DO OSTATNIEJ ZNANEJ POZYCJI TYLKO JEŒLI JESTEŒMY OD NIEJ ODDALENI
+            // To zapobiega "krêceniu siê w miejscu", gdy agent dotrze na miejsce.
+            if (Vector3.Distance(transform.position, lastKnownPosition) > 1.0f)
+            {
+                agent.SetDestination(lastKnownPosition);
+            }
         }
     }
 
@@ -382,8 +427,6 @@ public class GuardNoedifyAI : MonoBehaviour
         bool detected = IsPlayerVisible() || CanHearPlayer();
         if (detected)
         {
-            // --- NAPRAWA CZASU REAKCJI (PÓ£ SEKUNDY) ---
-            // Zmieniono z 0.8f na 2.0f. Przyrost 2.0 na sekundê oznacza osi¹gniêcie 1.0 w dok³adnie 0.5s!
             suspicion += Time.deltaTime * (IsPlayerVisible() ? 2.0f : 1.0f);
             lastKnownPosition = player.position;
         }
