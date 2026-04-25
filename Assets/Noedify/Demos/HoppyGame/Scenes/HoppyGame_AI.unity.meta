@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 510327305ef97174682ad248c9f38a7f
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 161940
+  packageName: Noedify - Easy Neural Networks
+  packageVersion: 1.0
+  assetPath: Assets/Noedify/Demos/HoppyGame/Scenes/HoppyGame_AI.unity
+  uploadId: 351715

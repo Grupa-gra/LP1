@@ -22,6 +22,11 @@ public class NoiseSpawner : MonoBehaviour
     public float maxScale2 = 8.0f;
     public float minDistance = 15.0f;
 
+    [Header("Dopasowanie do pod³o¿a")]
+    [Range(0f, 1f)]
+    [Tooltip("0 = prosto w górê, 1 = idealnie przylega do pochy³oœci terenu")]
+    public float terrainAlignment = 0.5f;
+
     private List<Vector3> spawnedPositions = new List<Vector3>();
 
     void Start()
@@ -93,10 +98,10 @@ public class NoiseSpawner : MonoBehaviour
                     float normX = x / terrainSize.x;
                     float normZ = z / terrainSize.z;
                     Vector3 terrainNormal = data.GetInterpolatedNormal(normX, normZ);
+                    Vector3 blendedNormal = Vector3.Slerp(Vector3.up, terrainNormal, terrainAlignment).normalized;
 
                     GameObject selectedPrefab = GetRandomPrefab(prefabs);
-
-                    Quaternion terrainRotation = Quaternion.FromToRotation(Vector3.up, terrainNormal);
+                    Quaternion terrainRotation = Quaternion.FromToRotation(Vector3.up, blendedNormal);
                     Quaternion finalRotation = terrainRotation * selectedPrefab.transform.rotation;
 
                     GameObject obj = Instantiate(selectedPrefab, spawnPos, finalRotation);
@@ -128,10 +133,10 @@ public class NoiseSpawner : MonoBehaviour
                         float normAroundX = (x + offsetX) / terrainSize.x;
                         float normAroundZ = (z + offsetZ) / terrainSize.z;
                         Vector3 terrainNormal2 = data.GetInterpolatedNormal(normAroundX, normAroundZ);
+                        Vector3 blendedNormal2 = Vector3.Slerp(Vector3.up, terrainNormal2, terrainAlignment).normalized;
 
                         GameObject selectedPrefabAround = GetRandomPrefab(prefabsAround);
-
-                        Quaternion terrainRotation2 = Quaternion.FromToRotation(Vector3.up, terrainNormal2);
+                        Quaternion terrainRotation2 = Quaternion.FromToRotation(Vector3.up, blendedNormal2);
                         Quaternion finalRotation2 = terrainRotation2 * selectedPrefabAround.transform.rotation;
 
                         GameObject obj2 = Instantiate(selectedPrefabAround, randomPos, finalRotation2);

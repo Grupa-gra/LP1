@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: e2599a921ffc8264fbdc842aed064f5c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 161940
+  packageName: Noedify - Easy Neural Networks
+  packageVersion: 1.0
+  assetPath: Assets/Noedify/Demos/TensorflowImport_MNIST_Drawing/Scripts/MouseSketch.cs
+  uploadId: 351715

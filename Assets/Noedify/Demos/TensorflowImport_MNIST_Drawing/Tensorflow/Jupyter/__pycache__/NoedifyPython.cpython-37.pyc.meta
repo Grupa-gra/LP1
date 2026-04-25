@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6ae5be5b849ca3d4ea1eb6fe6e393d6a
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 161940
+  packageName: Noedify - Easy Neural Networks
+  packageVersion: 1.0
+  assetPath: Assets/Noedify/Demos/TensorflowImport_MNIST_Drawing/Tensorflow/Jupyter/__pycache__/NoedifyPython.cpython-37.pyc
+  uploadId: 351715

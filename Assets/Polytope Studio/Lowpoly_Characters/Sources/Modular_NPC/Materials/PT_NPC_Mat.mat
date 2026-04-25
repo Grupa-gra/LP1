@@ -8,14 +8,15 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PT_NPC_Mat
-  m_Shader: {fileID: 4800000, guid: 5fdb92501eac48d4a87329098a14e790, type: 3}
+  m_Shader: {fileID: 4800000, guid: 4e5c65c1d3e8564479e1074db8a9989f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
-  - _METALICON_ON
+  - _METALLICON_ON
+  - _SMOOTHNESSON_ON
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -282,7 +283,7 @@ Material:
     - _Smoothness1: 0.5
     - _Smoothness2: 0.5
     - _Smoothness3: 0.5
-    - _SmoothnessOn: 0
+    - _SmoothnessOn: 1
     - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
     - _SpecSource: 0
@@ -340,9 +341,9 @@ Material:
     - _FEATHERS1COLOR1: {r: 0.7735849, g: 0.492613, b: 0.492613, a: 0}
     - _FEATHERS2COLOR: {r: 1, g: 0, b: 0, a: 0}
     - _FEATHERS2COLOR1: {r: 0.6792453, g: 0, b: 0, a: 0}
-    - _Fabric1color: {r: 1, g: 1, b: 1, a: 0}
-    - _Fabric2color: {r: 1, g: 0, b: 0.01978827, a: 0}
-    - _Fabric3color: {r: 0, g: 0, b: 0, a: 0}
+    - _Fabric1color: {r: 1, g: 0.93653005, b: 0.69946086, a: 0}
+    - _Fabric2color: {r: 1, g: 0, b: 0.01960802, a: 0}
+    - _Fabric3color: {r: 0, g: 0.13725491, b: 0.047058824, a: 1}
     - _HAIRCOLOR: {r: 0.24528301, g: 0.06965111, b: 0.005784976, a: 0}
     - _HAIRCOLOR1: {r: 1, g: 0, b: 0, a: 0}
     - _Haycolor: {r: 0.764151, g: 0.517899, b: 0.1622019, a: 1}
@@ -358,7 +359,7 @@ Material:
     - _LEATHER4COLOR1: {r: 0.1698113, g: 0.04637412, b: 0.02963688, a: 1}
     - _LIPSCOLOR: {r: 0.6981132, g: 0.23067373, b: 0.19428623, a: 0}
     - _LIPSCOLOR1: {r: 0.8301887, g: 0.3185886, b: 0.2780349, a: 0}
-    - _Leather1colour: {r: 0.5283019, g: 0.192425, b: 0.1420434, a: 1}
+    - _Leather1colour: {r: 0.25067383, g: 0.054195885, b: 0.02668897, a: 1}
     - _Leather3color: {r: 0.8867924, g: 0.6561894, b: 0.23843, a: 1}
     - _METAL1COLOR: {r: 0.8792791, g: 0.9922886, b: 1.007606, a: 0}
     - _METAL1COLOR1: {r: 0.8792791, g: 0.9922886, b: 1.007606, a: 0}
@@ -369,7 +370,7 @@ Material:
     - _METAL4COLOR: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
     - _METAL4COLOR1: {r: 0.4383232, g: 0.4383232, b: 0.4716981, a: 0}
     - _Metal1color: {r: 0.385947, g: 0.5532268, b: 0.5566038, a: 0}
-    - _Metal2color: {r: 1.309888, g: 1.123492, b: 1.044203, a: 0}
+    - _Metal2color: {r: 1.309888, g: 1.123492, b: 1.044203, a: 0.09803922}
     - _Metal3color: {r: 0.4578082, g: 0.638907, b: 0.6787086, a: 1}
     - _Mortarcolor: {r: 0.6415094, g: 0.5745595, b: 0.4629761, a: 0}
     - _OTHERCOLOR: {r: 0.6792453, g: 0.2755839, b: 0.05446779, a: 0}
@@ -377,7 +378,7 @@ Material:
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _Rock1color: {r: 0.5088814, g: 0.5149178, b: 0.5088814, a: 1}
     - _Rock2color: {r: 0.5188679, g: 0.4540594, b: 0.4283108, a: 1}
-    - _Ropecolor: {r: 0.6037736, g: 0.5810711, b: 0.3389106, a: 1}
+    - _Ropecolor: {r: 0, g: 0.13746631, b: 0.045444235, a: 1}
     - _SCLERACOLOR: {r: 0.9056604, g: 0.8159487, b: 0.8159487, a: 0}
     - _SCLERACOLOR1: {r: 0.9056604, g: 0.8159487, b: 0.8159487, a: 0}
     - _SKINCOLOR: {r: 0.8372809, g: 0.5654934, b: 0.48658735, a: 1}
@@ -386,7 +387,7 @@ Material:
     - _SubsurfaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _UvOffset: {r: 0, g: 0, b: 0, a: 0}
     - _UvTiling: {r: 1, g: 1, b: 0, a: 0}
-    - _Wood1color: {r: 0.4056604, g: 0.2683544, b: 0.135858, a: 1}
+    - _Wood1color: {r: 0.11051208, g: 0.11051208, b: 0.11051208, a: 1}
     - _Wood2color: {r: 0.1981132, g: 0.103908, b: 0.06634924, a: 1}
     - _Wood3color: {r: 0.1886792, g: 0.0907685, b: 0.05606977, a: 1}
     - _leather2color: {r: 0.6320754, g: 0.3730699, b: 0.2415005, a: 1}

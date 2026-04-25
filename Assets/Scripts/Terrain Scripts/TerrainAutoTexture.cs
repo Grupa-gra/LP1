@@ -4,12 +4,15 @@ public class TerrainAutoTexture : MonoBehaviour
 {
     public Terrain terrain;
 
+    [Header("Slope Blending (Ska³y)")]
     public float rockSlope = 35f;
-    public float rockBlendRange = 10f;
+    public float rockBlendRange = 15f;
 
+    [Header("Noise Settings (P³askie tekstury)")]
     public float noiseScale = 15f;
     public float noiseOffset = 500f;
 
+    [Header("Warp Settings (Zniekszta³cenia)")]
     public float warpScale = 8f;
     public float warpAmount = 0.08f;
 
@@ -20,6 +23,9 @@ public class TerrainAutoTexture : MonoBehaviour
 
     void ApplyTextures()
     {
+        if (terrain == null) terrain = GetComponent<Terrain>();
+        if (terrain == null) return;
+
         TerrainData terrainData = terrain.terrainData;
 
         int width = terrainData.alphamapWidth;
@@ -32,8 +38,8 @@ public class TerrainAutoTexture : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                float normX = x * 1.0f / width;
-                float normY = y * 1.0f / height;
+                float normX = (float)x / (width - 1);
+                float normY = (float)y / (height - 1);
 
                 float warpX = Mathf.PerlinNoise(normX * warpScale, normY * warpScale) * warpAmount;
                 float warpY = Mathf.PerlinNoise(normX * warpScale + 100f, normY * warpScale + 100f) * warpAmount;
@@ -48,7 +54,8 @@ public class TerrainAutoTexture : MonoBehaviour
                 float noiseB = Mathf.PerlinNoise(warpedX * noiseScale + noiseOffset, warpedY * noiseScale + noiseOffset);
 
                 float slopeFactor = Mathf.InverseLerp(rockSlope, rockSlope + rockBlendRange, slope);
-                float flatFactor = 1f / (1f + slopeFactor * 100f);
+                slopeFactor = Mathf.SmoothStep(0f, 1f, slopeFactor);
+                float flatFactor = 1f - slopeFactor;
 
                 if (layers > 0)
                 {
