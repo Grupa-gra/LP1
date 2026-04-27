@@ -11,6 +11,7 @@ public class GameTimer : MonoBehaviour
     public MonoBehaviour playerMovement;
 
     private bool isGameEnded = false;
+    private bool isTimerRunning = false;
 
     void Start()
     {
@@ -20,7 +21,7 @@ public class GameTimer : MonoBehaviour
 
     void Update()
     {
-        if (isGameEnded) return;
+        if (isGameEnded || !isTimerRunning) return;
 
         if (timeLeft > 0)
         {
@@ -31,6 +32,11 @@ public class GameTimer : MonoBehaviour
         {
             EndGame();
         }
+    }
+
+    public void StartTimer()
+    {
+        isTimerRunning = true;
     }
 
     void UpdateTimerUI()
