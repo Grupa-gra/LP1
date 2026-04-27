@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 5922609752374550872}
   - component: {fileID: 4797535415507452072}
   - component: {fileID: 7419048835895732860}
+  - component: {fileID: 5404317937516040239}
   m_Layer: 5
   m_Name: ButtonMenu
   m_TagString: Untagged
@@ -203,7 +204,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 21bb3d0142f45fe4bb8af3d6d55c600e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 360e1e55587260440b56b6856efbc1fe, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -269,3 +270,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5404317937516040239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633082536795651069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.23529412}
+  m_EffectDistance: {x: 5, y: -2}
+  m_UseGraphicAlpha: 1
