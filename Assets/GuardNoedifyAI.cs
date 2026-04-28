@@ -6,7 +6,9 @@ using UnityEngine.AI;
 
 public class GuardNoedifyAI : MonoBehaviour
 {
-    // --- NOEDIFY NETWORK ---
+    public GameStateManager gameStateManager;
+    public PauseMenu pauseMenu;
+
     private Noedify.Net net;
     private Noedify_Solver solver;
     private string saveDirectory;
@@ -221,6 +223,9 @@ public class GuardNoedifyAI : MonoBehaviour
         {
             isGameOver = true;
             agent.isStopped = true;
+
+            gameStateManager.SetState(GameState.Ended);
+            pauseMenu.ForceClosePause();
 
             RewardAI();
             ShowDeathScreen();

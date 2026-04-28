@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private float rotationX = 0;
     private float minusOne;
     private bool canMove = true;
+    private bool ignoreMouseInput = false;
 
     private Vector3 moveDirection = Vector3.zero;
     private CharacterController characterController;
@@ -39,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
         defaultWalkSpeed = walkSpeed;
         defaultRunSpeed = runSpeed;
         defaultCenterY = characterController.center.y;
@@ -63,29 +65,29 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Time.timeScale == 0f) return;
+        if (GameStateManager.Instance.CurrentState != GameState.Playing)
+        {
+            ignoreMouseInput = true;
+            return;
+        }
+
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis(vertical) : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis(horizontal) : 0;
+
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
         if (Input.GetButton(jump) && canMove && characterController.isGrounded)
-        {
             moveDirection.y = jumpPower;
-        }
         else
-        {
             moveDirection.y = movementDirectionY;
-        }
 
         if (!characterController.isGrounded)
-        {
             moveDirection.y += gravity * Time.deltaTime * minusOne;
-        }
 
         if (Input.GetKey(KeyCode.LeftControl) && canMove)
         {
@@ -109,6 +111,14 @@ public class PlayerMovement : MonoBehaviour
         characterController.center = newCenter;
 
         characterController.Move(moveDirection * Time.deltaTime);
+
+        if (ignoreMouseInput)
+        {
+            Input.GetAxis(mouseX);
+            Input.GetAxis(mouseY);
+            ignoreMouseInput = false;
+            return;
+        }
 
         if (canMove)
         {

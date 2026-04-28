@@ -50,6 +50,7 @@ public class GameTimer : MonoBehaviour
     void EndGame()
     {
         isGameEnded = true;
+        GameStateManager.Instance.SetState(GameState.Ended);
         timeLeft = 0;
         UpdateTimerUI();
 

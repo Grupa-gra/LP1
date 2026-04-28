@@ -5,10 +5,12 @@ public class EndGameManager : MonoBehaviour
 {
     public GameObject endGameUI;
     public MonoBehaviour playerMovement;
+    public PauseMenu pauseMenu;
 
     public void EndGame()
     {
         GameStateManager.Instance.SetState(GameState.Ended);
+        pauseMenu.ForceClosePause();
 
         playerMovement.enabled = false;
 

@@ -14,7 +14,11 @@ public class NoiseSpawner : MonoBehaviour
 {
     public Terrain terrain;
 
-    [Header("Główne Obiekty (np. Drzewa)")]
+    [Header("Granice Generowania")]
+    [Tooltip("Margines od krawędzi terenu dla wież i dodatkowych obiektów")]
+    public float terrainPadding = 50f;
+
+    [Header("Główne Obiekty")]
     public SpawnItem[] prefabs;
     public int density = 5000;
     public float scale = 20f;
@@ -22,18 +26,34 @@ public class NoiseSpawner : MonoBehaviour
     public float minScale = 6.0f;
     public float maxScale = 10.0f;
 
-    [Header("Obiekty wokół (np. Grzyby)")]
+    [Header("Obiekty wokół")]
     public SpawnItem[] prefabsAround;
     public float minScale2 = 2.0f;
     public float maxScale2 = 4.0f;
 
-    [Header("Nowa Sekcja: Pniaki")]
-    public SpawnItem[] stumpPrefabs;
-    public int stumpDensity = 500;
-    public float stumpMinDistance = 5.0f; // Mniejszy dystans specjalnie dla pniaków!
+    [Header("Dodatkowe Obiekty (Szanują padding)")]
+    public SpawnItem[] extraObjectPrefabs;
+    public int extraObjectDensity = 500;
+    public float extraObjectMinDistance = 5.0f;
+
+    [Header("Wieże Strażnicze (Szanują padding)")]
+    public GameObject watchtowerPrefab;
+    public int watchtowerCount = 4;
+
+    [Tooltip("Minimalny dystans między jedną wieżą a drugą")]
+    public float watchtowerMinDistance = 100f;
+
+    [Tooltip("Promień wokół wieży, w którym NIE będą rosnąć drzewa ani inne obiekty")]
+    public float watchtowerClearance = 25f;
+
+    [Tooltip("O ile wpuścić wieżę w ziemię, aby nie lewitowała na zboczach (wartość ujemna = głębiej w ziemię)")]
+    public float watchtowerYOffset = -1.0f;
+
+    [Tooltip("Jeśli zaznaczone, wieża zawsze będzie stać prosto pionowo, ignorując nachylenie stoku.")]
+    public bool keepWatchtowerUpright = true;
 
     [Header("Ustawienia Fizyki i Rozmieszczenia")]
-    public float minDistance = 15.0f; // To obowiązuje tylko duże drzewa
+    public float minDistance = 15.0f;
     public float checkRadius = 1.5f;
     public LayerMask noSpawnLayer;
     [Range(0f, 1f)] public float terrainAlignment = 0.5f;
@@ -45,19 +65,21 @@ public class NoiseSpawner : MonoBehaviour
 
     private float totalWeight;
     private float totalWeightAround;
-    private float totalWeightStumps;
+    private float totalWeightExtraObjects;
     private float cellSize;
 
     private Dictionary<Vector2Int, List<Vector3>> spatialGrid = new Dictionary<Vector2Int, List<Vector3>>();
     private List<GameObject> spawnedObjects = new List<GameObject>();
 
+    private List<Vector3> watchtowerPositions = new List<Vector3>();
+
     void Awake()
     {
         totalWeight = CalculateTotalWeight(prefabs);
         totalWeightAround = CalculateTotalWeight(prefabsAround);
-        totalWeightStumps = CalculateTotalWeight(stumpPrefabs);
+        totalWeightExtraObjects = CalculateTotalWeight(extraObjectPrefabs);
 
-        cellSize = minDistance; // Rozmiar siatki robimy pod największe obiekty
+        cellSize = minDistance;
 
         if (loadingScreen != null) loadingScreen.SetActive(true);
         if (loadingBar != null) loadingBar.value = 0f;
@@ -73,17 +95,83 @@ public class NoiseSpawner : MonoBehaviour
         TerrainData data = terrain.terrainData;
         Vector3 terrainSize = data.size;
         Vector3 terrainPosition = terrain.transform.position;
-        float treeMinDistSqr = minDistance * minDistance;
-        float stumpMinDistSqr = stumpMinDistance * stumpMinDistance;
-        int spawnedThisFrame = 0;
 
-        // --- KROK 1: SPAWNOWANIE DRZEW I GRZYBÓW ---
+        float treeMinDistSqr = minDistance * minDistance;
+        float extraObjMinDistSqr = extraObjectMinDistance * extraObjectMinDistance;
+        float watchtowerMinDistSqr = watchtowerMinDistance * watchtowerMinDistance;
+        float clearanceDistSqr = watchtowerClearance * watchtowerClearance;
+
+        int spawnedThisFrame = 0;
+        int totalObjectsToSpawn = watchtowerCount + density + extraObjectDensity;
+        int currentSpawnedTotal = 0;
+
+        for (int i = 0; i < watchtowerCount; i++)
+        {
+            if (watchtowerPrefab == null) break;
+
+            for (int attempt = 0; attempt < 200; attempt++)
+            {
+                float x = Random.Range(terrainPadding, terrainSize.x - terrainPadding);
+                float z = Random.Range(terrainPadding, terrainSize.z - terrainPadding);
+
+                float worldX = terrainPosition.x + x;
+                float worldZ = terrainPosition.z + z;
+                float y = terrain.SampleHeight(new Vector3(worldX, 0, worldZ));
+
+                Vector3 towerPos = new Vector3(worldX, y + watchtowerYOffset, worldZ);
+                Vector3 checkPos = new Vector3(worldX, y, worldZ);
+
+                if (!Physics.CheckSphere(checkPos, checkRadius, noSpawnLayer) && !IsTooClose(checkPos, treeMinDistSqr))
+                {
+                    bool tooCloseToAnotherTower = false;
+                    foreach (Vector3 existingTower in watchtowerPositions)
+                    {
+                        if ((towerPos - existingTower).sqrMagnitude < watchtowerMinDistSqr)
+                        {
+                            tooCloseToAnotherTower = true;
+                            break;
+                        }
+                    }
+
+                    if (!tooCloseToAnotherTower)
+                    {
+                        AddToGrid(towerPos);
+                        watchtowerPositions.Add(towerPos);
+
+                        Quaternion rotation;
+
+                        if (keepWatchtowerUpright)
+                        {
+                            rotation = Quaternion.Euler(0, Random.Range(0f, 360f), 0) * watchtowerPrefab.transform.rotation;
+                        }
+                        else
+                        {
+                            float normX = (towerPos.x - terrainPosition.x) / terrainSize.x;
+                            float normZ = (towerPos.z - terrainPosition.z) / terrainSize.z;
+                            Vector3 terrainNormal = data.GetInterpolatedNormal(normX, normZ);
+                            Vector3 blendedNormal = Vector3.Slerp(Vector3.up, terrainNormal, terrainAlignment).normalized;
+                            rotation = Quaternion.FromToRotation(Vector3.up, blendedNormal) * watchtowerPrefab.transform.rotation;
+                        }
+
+                        GameObject obj = Instantiate(watchtowerPrefab, towerPos, rotation);
+                        obj.SetActive(false);
+                        spawnedObjects.Add(obj);
+
+                        break;
+                    }
+                }
+            }
+            currentSpawnedTotal++;
+            UpdateLoadingBar(currentSpawnedTotal, totalObjectsToSpawn);
+        }
         for (int i = 0; i < density; i++)
         {
-            UpdateLoadingBar(i, density + stumpDensity);
+            currentSpawnedTotal++;
+            UpdateLoadingBar(currentSpawnedTotal, totalObjectsToSpawn);
 
             float x = Random.Range(0, terrainSize.x);
             float z = Random.Range(0, terrainSize.z);
+
             float worldX = terrainPosition.x + x;
             float worldZ = terrainPosition.z + z;
 
@@ -94,13 +182,14 @@ public class NoiseSpawner : MonoBehaviour
                 float y = terrain.SampleHeight(new Vector3(worldX, 0, worldZ));
                 Vector3 spawnPos = new Vector3(worldX, y, worldZ);
 
-                // Drzewa używają gigantycznego dystansu (minDistance)
-                if (!Physics.CheckSphere(spawnPos, checkRadius, noSpawnLayer) && !IsTooClose(spawnPos, treeMinDistSqr))
+                if (!Physics.CheckSphere(spawnPos, checkRadius, noSpawnLayer)
+                    && !IsTooClose(spawnPos, treeMinDistSqr)
+                    && !IsInClearanceZone(spawnPos, clearanceDistSqr))
                 {
                     AddToGrid(spawnPos);
                     SpawnObject(prefabs, totalWeight, spawnPos, noise, data, terrainSize, terrainPosition, minScale, maxScale);
 
-                    TrySpawnAround(spawnPos, noise, data, terrainSize, terrainPosition);
+                    TrySpawnAround(spawnPos, noise, data, terrainSize, terrainPosition, clearanceDistSqr);
                     spawnedThisFrame++;
                 }
             }
@@ -108,31 +197,32 @@ public class NoiseSpawner : MonoBehaviour
             if (spawnedThisFrame >= 50) { spawnedThisFrame = 0; yield return null; }
         }
 
-        // --- KROK 2: SPAWNOWANIE PNIAKÓW ---
-        for (int i = 0; i < stumpDensity; i++)
+        for (int i = 0; i < extraObjectDensity; i++)
         {
-            UpdateLoadingBar(density + i, density + stumpDensity);
+            currentSpawnedTotal++;
+            UpdateLoadingBar(currentSpawnedTotal, totalObjectsToSpawn);
 
-            float x = Random.Range(0, terrainSize.x);
-            float z = Random.Range(0, terrainSize.z);
+            float x = Random.Range(terrainPadding, terrainSize.x - terrainPadding);
+            float z = Random.Range(terrainPadding, terrainSize.z - terrainPadding);
+
             float worldX = terrainPosition.x + x;
             float worldZ = terrainPosition.z + z;
 
             float y = terrain.SampleHeight(new Vector3(worldX, 0, worldZ));
-            Vector3 stumpPos = new Vector3(worldX, y, worldZ);
+            Vector3 objPos = new Vector3(worldX, y, worldZ);
 
-            // Pniaki używają mniejszego dystansu (stumpMinDistance)
-            if (!Physics.CheckSphere(stumpPos, checkRadius, noSpawnLayer) && !IsTooClose(stumpPos, stumpMinDistSqr))
+            if (!Physics.CheckSphere(objPos, checkRadius, noSpawnLayer)
+                && !IsTooClose(objPos, extraObjMinDistSqr)
+                && !IsInClearanceZone(objPos, clearanceDistSqr))
             {
-                AddToGrid(stumpPos);
-                SpawnObject(stumpPrefabs, totalWeightStumps, stumpPos, 0.5f, data, terrainSize, terrainPosition, minScale2, maxScale2);
+                AddToGrid(objPos);
+                SpawnObject(extraObjectPrefabs, totalWeightExtraObjects, objPos, 0.5f, data, terrainSize, terrainPosition, minScale2, maxScale2);
                 spawnedThisFrame++;
             }
 
             if (spawnedThisFrame >= 50) { spawnedThisFrame = 0; yield return null; }
         }
 
-        // --- FINALIZACJA ---
         foreach (var obj in spawnedObjects) obj.SetActive(true);
 
         if (loadingBar != null) loadingBar.value = 1f;
@@ -140,6 +230,7 @@ public class NoiseSpawner : MonoBehaviour
         if (gameTimer != null) gameTimer.StartTimer();
 
         spatialGrid.Clear();
+        watchtowerPositions.Clear();
         spawnedObjects.Clear();
     }
 
@@ -165,8 +256,7 @@ public class NoiseSpawner : MonoBehaviour
 
         spawnedObjects.Add(obj);
     }
-
-    private void TrySpawnAround(Vector3 spawnPos, float noise, TerrainData data, Vector3 terrainSize, Vector3 terrainPosition)
+    private void TrySpawnAround(Vector3 spawnPos, float noise, TerrainData data, Vector3 terrainSize, Vector3 terrainPosition, float clearanceDistSqr)
     {
         if (prefabsAround == null || prefabsAround.Length == 0) return;
 
@@ -180,8 +270,7 @@ public class NoiseSpawner : MonoBehaviour
             Vector3 randomPos = spawnPos + new Vector3(Mathf.Cos(angle) * distance, 0f, Mathf.Sin(angle) * distance);
             randomPos.y = terrain.SampleHeight(randomPos);
 
-            // Wywaliłem stąd blokadę odległości (IsTooClose) - grzyby rosną blisko jak dawniej!
-            if (!Physics.CheckSphere(randomPos, checkRadius, noSpawnLayer))
+            if (!Physics.CheckSphere(randomPos, checkRadius, noSpawnLayer) && !IsInClearanceZone(randomPos, clearanceDistSqr))
             {
                 AddToGrid(randomPos);
                 SpawnObject(prefabsAround, totalWeightAround, randomPos, noise, data, terrainSize, terrainPosition, minScale2, maxScale2);
@@ -199,6 +288,8 @@ public class NoiseSpawner : MonoBehaviour
 
     GameObject GetRandomPrefab(SpawnItem[] items, float weight)
     {
+        if (items == null || items.Length == 0) return null;
+
         float randomValue = Random.Range(0f, weight);
         float currentWeight = 0f;
 
@@ -229,6 +320,17 @@ public class NoiseSpawner : MonoBehaviour
         }
         return false;
     }
+    bool IsInClearanceZone(Vector3 pos, float clearanceDistSqr)
+    {
+        Vector2 pos2D = new Vector2(pos.x, pos.z);
+
+        foreach (var towerPos in watchtowerPositions)
+        {
+            Vector2 towerPos2D = new Vector2(towerPos.x, towerPos.z);
+            if ((pos2D - towerPos2D).sqrMagnitude < clearanceDistSqr) return true;
+        }
+        return false;
+    }
 
     void AddToGrid(Vector3 pos)
     {
@@ -244,7 +346,7 @@ public class NoiseSpawner : MonoBehaviour
 
     void UpdateLoadingBar(int current, int total)
     {
-        if (loadingBar != null)
+        if (loadingBar != null && total > 0)
             loadingBar.value = (float)current / total;
     }
 }

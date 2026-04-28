@@ -9,7 +9,9 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (GameStateManager.Instance.CurrentState != GameState.Playing && GameStateManager.Instance.CurrentState != GameState.Paused) return;
+        if (GameStateManager.Instance.CurrentState != GameState.Playing &&
+            GameStateManager.Instance.CurrentState != GameState.Paused)
+            return;
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -22,7 +24,7 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-        PlayerMovement.enabled = false;
+        //PlayerMovement.enabled = false;
         pauseUI.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
@@ -35,7 +37,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        PlayerMovement.enabled = true;
+        //PlayerMovement.enabled = true;
         pauseUI.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
@@ -44,6 +46,12 @@ public class PauseMenu : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void ForceClosePause()
+    {
+        pauseUI.SetActive(false);
+        isPaused = false;
     }
 
     public void LoadMenu()
