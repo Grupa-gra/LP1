@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameTimer : MonoBehaviour
@@ -7,8 +6,8 @@ public class GameTimer : MonoBehaviour
     public float timeLeft = 300f;
     public TextMeshProUGUI timerText;
 
-    public GameObject endGameUI;
-    public MonoBehaviour playerMovement;
+    // 1. Dodajemy referencjê do Twojego prawdziwego Managera
+    public EndGameManager endGameManager;
 
     private bool isGameEnded = false;
     private bool isTimerRunning = false;
@@ -16,7 +15,6 @@ public class GameTimer : MonoBehaviour
     void Start()
     {
         UpdateTimerUI();
-        endGameUI.SetActive(false);
     }
 
     void Update()
@@ -30,7 +28,20 @@ public class GameTimer : MonoBehaviour
         }
         else
         {
-            EndGame();
+            // Czas min¹³!
+            timeLeft = 0;
+            UpdateTimerUI();
+            isGameEnded = true;
+
+            // 2. Wo³amy EndGameManager, ¿eby zrobi³ ca³¹ magiê z punktami i UI
+            if (endGameManager != null)
+            {
+                endGameManager.EndGame();
+            }
+            else
+            {
+                Debug.LogError("Brak podpiêtego EndGameManager w Timerze!");
+            }
         }
     }
 
@@ -45,33 +56,5 @@ public class GameTimer : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeLeft % 60);
 
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-    }
-
-    void EndGame()
-    {
-        isGameEnded = true;
-        GameStateManager.Instance.SetState(GameState.Ended);
-        timeLeft = 0;
-        UpdateTimerUI();
-
-        playerMovement.enabled = false;
-
-        endGameUI.SetActive(true);
-        Time.timeScale = 0f;
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    public void Retry()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void LoadMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Menu");
     }
 }
