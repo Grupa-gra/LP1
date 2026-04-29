@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class GuardNoedifyAI : MonoBehaviour
 {
     public GameStateManager gameStateManager;
+    public EndGameManager endGameManager;
     public PauseMenu pauseMenu;
 
     private Noedify.Net net;
@@ -77,7 +78,7 @@ public class GuardNoedifyAI : MonoBehaviour
         if (agent != null)
         {
             agent.angularSpeed = 600f;
-            agent.autoBraking = false; 
+            agent.autoBraking = false;
         }
 
         lastKnownPosition = transform.position;
@@ -99,33 +100,41 @@ public class GuardNoedifyAI : MonoBehaviour
         net = new Noedify.Net();
         string fullPath = Path.Combine(saveDirectory, modelName + ".txt");
 
-        if (File.Exists(fullPath) && !trainingMode)
+        Debug.Log($"Œcie¿ka zapisu/odczytu pliku AI: {fullPath}");
+
+        Noedify.Layer inputLayer = new Noedify.Layer(Noedify.LayerType.Input, 5, "Input Layer");
+        net.AddLayer(inputLayer);
+
+        Noedify.Layer hidden1 = new Noedify.Layer(Noedify.LayerType.FullyConnected, 8, Noedify.ActivationFunction.Sigmoid, "Hidden 1");
+        net.AddLayer(hidden1);
+
+        Noedify.Layer hidden2 = new Noedify.Layer(Noedify.LayerType.FullyConnected, 4, Noedify.ActivationFunction.Sigmoid, "Hidden 2");
+        net.AddLayer(hidden2);
+
+        Noedify.Layer outputLayer = new Noedify.Layer(Noedify.LayerType.Output, 3, Noedify.ActivationFunction.SoftMax, "Output Layer");
+        net.AddLayer(outputLayer);
+
+        net.BuildNetwork();
+
+        if (File.Exists(fullPath))
         {
-            Debug.Log("Znaleziono wytrenowany model! Wczytywanie...");
+            Debug.Log($"<color=green>ZNALEZIONO PLIK AI!</color> Wczytywanie wytrenowanych wag z {fullPath}");
             LoadNetworkModel();
+
+            if (trainingMode)
+            {
+                Debug.Log("Tryb treningu wci¹¿ aktywny: Stra¿nik bêdzie siê dalej uczy³ podczas gry (Ci¹g³a Nauka).");
+            }
         }
         else
         {
-            Debug.Log("Tworzenie nowej sieci z API Noedify...");
-
-            Noedify.Layer inputLayer = new Noedify.Layer(Noedify.LayerType.Input, 5, "Input Layer");
-            net.AddLayer(inputLayer);
-
-            Noedify.Layer hidden1 = new Noedify.Layer(Noedify.LayerType.FullyConnected, 8, Noedify.ActivationFunction.Sigmoid, "Hidden 1");
-            net.AddLayer(hidden1);
-
-            Noedify.Layer hidden2 = new Noedify.Layer(Noedify.LayerType.FullyConnected, 4, Noedify.ActivationFunction.Sigmoid, "Hidden 2");
-            net.AddLayer(hidden2);
-
-            Noedify.Layer outputLayer = new Noedify.Layer(Noedify.LayerType.Output, 3, Noedify.ActivationFunction.SoftMax, "Output Layer");
-            net.AddLayer(outputLayer);
-
-            net.BuildNetwork();
+            Debug.Log("<color=orange>BRAK PLIKU AI.</color> Sieæ startuje od zera. Rozpoczynam pierwszy trening...");
 
             if (trainingMode)
             {
                 TrainNetworkFromData();
-                SaveNetworkModel();
+                SaveNetworkModel(); // Tworzy plik pierwszy raz
+                Debug.Log($"<color=green>Zapisano nowo wytrenowany model do pliku!</color>");
             }
         }
     }
@@ -162,7 +171,7 @@ public class GuardNoedifyAI : MonoBehaviour
 
     void RewardAI()
     {
-        Debug.Log("Gracz z³apany! Douczam model w locie (unikam zapominania)!");
+        Debug.Log("Gracz z³apany! Douczam model w locie na b³êdach gracza...");
 
         List<float[,,]> memoryInputsList = new List<float[,,]>();
         List<float[]> expectedOutputsList = new List<float[]>();
@@ -192,12 +201,13 @@ public class GuardNoedifyAI : MonoBehaviour
 
         memoryBufferInputs.Clear();
         SaveNetworkModel();
+        Debug.Log("<color=green>Zaktualizowano plik z doœwiadczeniem Stra¿nika!</color>");
     }
 
     [ContextMenu("Trenuj model Noedify")]
     public void TrainNetworkFromData()
     {
-        Debug.Log("Rozpoczynam trening Noedify na zestawie danych...");
+        Debug.Log("Rozpoczynam wstêpny trening Noedify...");
 
         List<float[,,]> inputsList = new List<float[,,]>();
         List<float[]> targetsList = new List<float[]>();
@@ -223,21 +233,26 @@ public class GuardNoedifyAI : MonoBehaviour
         {
             isGameOver = true;
             agent.isStopped = true;
-
-            gameStateManager.SetState(GameState.Ended);
-            pauseMenu.ForceClosePause();
-
             RewardAI();
+
+            if (endGameManager != null)
+            {
+                endGameManager.EndGame();
+            }
+            else
+            {
+                Debug.LogError("Brak podpiêtego EndGameManager w GuardNoedifyAI!");
+            }
             ShowDeathScreen();
         }
     }
 
     void ShowDeathScreen()
     {
-        if (deathUIScreen != null) deathUIScreen.SetActive(true);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        Time.timeScale = 0f;
+        if (deathUIScreen != null)
+        {
+            deathUIScreen.SetActive(true);
+        }
     }
 
     void SaveToMemory(float[] input)
@@ -374,12 +389,6 @@ public class GuardNoedifyAI : MonoBehaviour
         agent.updateRotation = true;
         agent.isStopped = false;
 
-        // USUÑ: currentAction = (int)Action.Patrol;
-        // USUÑ: suspicion = 0f;
-        // Sieæ neuronowa sama zmieni stan na Patrol, gdy suspicion powoli opadnie w UpdateSuspicionOverTime!
-
-        // Ustawiamy cel na najbli¿szy punkt patrolowy TYLKO, jeœli jeszcze go nie obraliœmy.
-        // Dziêki temu agent nie bêdzie co klatkê przelicza³ œcie¿ki od nowa.
         if (Vector3.Distance(agent.destination, patrolPoints[currentPointIndex].position) > 1.0f)
         {
             FindClosestPatrolPoint();
@@ -408,8 +417,6 @@ public class GuardNoedifyAI : MonoBehaviour
         }
         else
         {
-            // ID DO OSTATNIEJ ZNANEJ POZYCJI TYLKO JEŒLI JESTEŒMY OD NIEJ ODDALENI
-            // To zapobiega "krêceniu siê w miejscu", gdy agent dotrze na miejsce.
             if (Vector3.Distance(transform.position, lastKnownPosition) > 1.0f)
             {
                 agent.SetDestination(lastKnownPosition);
@@ -470,10 +477,6 @@ public class GuardNoedifyAI : MonoBehaviour
     {
         if (solver != null) Noedify.DestroySolver(solver);
     }
-
-    // ==========================================
-    // BRZUSZEK NOEDIFY
-    // ==========================================
 
     float[] GetNetworkPrediction(float[] input)
     {
