@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f42cf05976ff2fe44a903222d520cf33
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 161940
+  packageName: Noedify - Easy Neural Networks
+  packageVersion: 1.0
+  assetPath: Assets/Noedify/Demos/Background_Training_Digits/Scripts/Noedify_example_runtimeTrain_Convolutional.cs
+  uploadId: 351715

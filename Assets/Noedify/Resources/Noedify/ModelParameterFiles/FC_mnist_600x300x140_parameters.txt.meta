@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4265fbb1c6afbf841941acfeaa599026
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 161940
+  packageName: Noedify - Easy Neural Networks
+  packageVersion: 1.0
+  assetPath: Assets/Noedify/Resources/Noedify/ModelParameterFiles/FC_mnist_600x300x140_parameters.txt
+  uploadId: 351715

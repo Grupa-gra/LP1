@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 28f015b738108c84bbc18d39a873ddb8
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 161940
+  packageName: Noedify - Easy Neural Networks
+  packageVersion: 1.0
+  assetPath: Assets/Noedify/Demos/Background_Training_Digits/Scenes/Background_Training_Digits.unity
+  uploadId: 351715

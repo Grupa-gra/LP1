@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 54c292e0a4b00464e9b97ee4d25b3ebc
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 161940
+  packageName: Noedify - Easy Neural Networks
+  packageVersion: 1.0
+  assetPath: Assets/Noedify/Demos/Background_Training_Digits/Materials/AxisMat.mat
+  uploadId: 351715

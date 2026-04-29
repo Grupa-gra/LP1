@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 463b71140ca9db740960a4a0462f64cf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 8400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 161940
+  packageName: Noedify - Easy Neural Networks
+  packageVersion: 1.0
+  assetPath: Assets/Noedify/Demos/Background_Training_Digits/Materials/DrawRenderTexture.renderTexture
+  uploadId: 351715
