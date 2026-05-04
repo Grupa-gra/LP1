@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -7,12 +8,18 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private LayerMask Mushrooms;
     [SerializeField] private TextMeshProUGUI promptText;
 
+    [Header("Crosshair")]
+    [SerializeField] private Image crosshair;
+    [SerializeField] private Sprite defaultSprite;
+    [SerializeField] private Sprite interactSprite;
+
     private Camera _cam;
     private IInteractable _currentInteractable;
 
     void Start()
     {
         _cam = Camera.main;
+        SetDefault();
     }
 
     void Update()
@@ -21,25 +28,31 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
         {
-            TryInteract();
+            _currentInteractable?.Interact();
         }
     }
 
     void CheckForInteractable()
     {
-        Ray ray = new Ray(_cam.transform.position, _cam.transform.forward);
+        Ray ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
-        if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
+        if (Physics.Raycast(ray, out RaycastHit hit, interactRange, Mushrooms))
         {
             if (((1 << hit.collider.gameObject.layer) & Mushrooms) != 0 &&
-                hit.collider.TryGetComponent(out IInteractable interactable))
+                hit.collider.GetComponentInParent<IInteractable>() is IInteractable interactable)
             {
-                _currentInteractable = interactable;
+                string prompt = interactable.GetInteractPrompt();
 
-                if (promptText)
-                    promptText.text = interactable.GetInteractPrompt();
+                if (!string.IsNullOrEmpty(prompt))
+                {
+                    _currentInteractable = interactable;
 
-                return;
+                    if (promptText)
+                        promptText.text = prompt;
+
+                    SetInteract();
+                    return;
+                }
             }
         }
 
@@ -47,10 +60,19 @@ public class PlayerInteraction : MonoBehaviour
 
         if (promptText)
             promptText.text = "";
+
+        SetDefault();
     }
 
-    void TryInteract()
+    void SetDefault()
     {
-        _currentInteractable?.Interact();
+        if (crosshair != null)
+            crosshair.sprite = defaultSprite;
+    }
+
+    void SetInteract()
+    {
+        if (crosshair != null)
+            crosshair.sprite = interactSprite;
     }
 }
