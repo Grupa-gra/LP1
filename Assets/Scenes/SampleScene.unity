@@ -149,6 +149,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1647563879}
   - {fileID: 1604874637}
   m_Father: {fileID: 125147010}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -396,13 +397,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: e3bf816f244144b4491962dff9f3e2b9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 909526584}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: e3bf816f244144b4491962dff9f3e2b9, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 909526583}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: e3bf816f244144b4491962dff9f3e2b9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 909526588}
+      addedObject: {fileID: 909526594}
   m_SourcePrefab: {fileID: 100100000, guid: e3bf816f244144b4491962dff9f3e2b9, type: 3}
 --- !u!1 &112322011 stripped
 GameObject:
@@ -569,6 +567,7 @@ RectTransform:
   - {fileID: 678524381}
   - {fileID: 1886618938}
   - {fileID: 1770383595}
+  - {fileID: 607794290}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -615,7 +614,7 @@ MonoBehaviour:
   lookSpeed: 2
   lookXLimit: 70
   defaultHeight: 1
-  crouchHeight: 0.5
+  crouchHeight: 1
   crouchSpeed: 7.99
   crouchCenterY: 0.5
   crouchSmoothSpeed: 8
@@ -677,7 +676,10 @@ MonoBehaviour:
   Mushrooms:
     serializedVersion: 2
     m_Bits: 64
-  promptText: {fileID: 0}
+  promptText: {fileID: 607794291}
+  crosshair: {fileID: 748388059}
+  defaultSprite: {fileID: 21300000, guid: 90a340fc3133448ba99eb98040c08c80, type: 3}
+  interactSprite: {fileID: 21300000, guid: aede8852c0978432591cc38bccd163b8, type: 3}
 --- !u!1 &139741809
 GameObject:
   m_ObjectHideFlags: 0
@@ -1479,14 +1481,14 @@ Camera:
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 2
+  m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
   m_Iso: 200
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 15
+  m_FocalLength: 16.885635
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -1501,7 +1503,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 77.31962
+  field of view: 70.80001
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1679,33 +1681,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Muchomor Cytrynowy (Gromada)
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: -30
   respawnTime: 30
---- !u!64 &346074819
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &346074826 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 7573e16445309ac428f30f515a817582, type: 3}
+  m_PrefabInstance: {fileID: 757305213}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 346074814}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: 0eff981a16f2c8440a3fcd9c00b5e402, type: 3}
---- !u!65 &346074823
+--- !u!65 &346074829
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1724,13 +1712,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.95392615, y: 0.88891137, z: 0.9695332}
-  m_Center: {x: -0.0076557435, y: -0.016316872, z: 0.40933964}
---- !u!4 &346074826 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 7573e16445309ac428f30f515a817582, type: 3}
-  m_PrefabInstance: {fileID: 757305213}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 0.95392615, y: 0.88891137, z: 1.19}
+  m_Center: {x: -0.0076528825, y: -0.016316395, z: -0.4}
 --- !u!1001 &358034952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1894,13 +1877,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: ddb75a12231f3864fa051295bfb2cfe2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 625939626}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: ddb75a12231f3864fa051295bfb2cfe2, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 625939625}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: ddb75a12231f3864fa051295bfb2cfe2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 625939630}
+      addedObject: {fileID: 625939636}
   m_SourcePrefab: {fileID: 100100000, guid: ddb75a12231f3864fa051295bfb2cfe2, type: 3}
 --- !u!1 &378180592 stripped
 GameObject:
@@ -1919,33 +1899,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Purchawka (Gromada)
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: -15
   respawnTime: 30
---- !u!64 &378180597
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &378180604 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 2bc296aba4ec7f14ca89b9d420594533, type: 3}
+  m_PrefabInstance: {fileID: 847250812}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378180592}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 4c99f15abbfec7e429f9e2f0e7ea9266, type: 3}
---- !u!65 &378180601
+--- !u!65 &378180607
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1964,13 +1930,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5783775, y: 1.4777864, z: 1.0884941}
-  m_Center: {x: -0.05415612, y: 0.08741513, z: 0.41532123}
---- !u!4 &378180604 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 2bc296aba4ec7f14ca89b9d420594533, type: 3}
-  m_PrefabInstance: {fileID: 847250812}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 1.5783775, y: 1.4777864, z: 1.19}
+  m_Center: {x: -0.05415326, y: 0.08738127, z: -0.4}
 --- !u!1001 &398349473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2114,13 +2075,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 8d90f02b522af8f47b0531adb234b285, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 941718808}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 8d90f02b522af8f47b0531adb234b285, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 941718807}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 8d90f02b522af8f47b0531adb234b285, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 941718812}
+      addedObject: {fileID: 941718818}
   m_SourcePrefab: {fileID: 100100000, guid: 8d90f02b522af8f47b0531adb234b285, type: 3}
 --- !u!1001 &438176957
 PrefabInstance:
@@ -2188,13 +2146,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 1a340bb9e6c40f14c91cc6a0f9c723a5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1261968790}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 1a340bb9e6c40f14c91cc6a0f9c723a5, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1261968789}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 1a340bb9e6c40f14c91cc6a0f9c723a5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1261968794}
+      addedObject: {fileID: 1261968800}
   m_SourcePrefab: {fileID: 100100000, guid: 1a340bb9e6c40f14c91cc6a0f9c723a5, type: 3}
 --- !u!1 &453548119
 GameObject:
@@ -2498,6 +2453,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   promptText: {fileID: 0}
+  crosshair: {fileID: 0}
+  defaultSprite: {fileID: 0}
+  interactSprite: {fileID: 0}
 --- !u!4 &486688513
 Transform:
   m_ObjectHideFlags: 0
@@ -2611,13 +2569,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: b553840ca33790942a6332d4fdb78d31, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1450687182}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: b553840ca33790942a6332d4fdb78d31, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1450687181}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: b553840ca33790942a6332d4fdb78d31, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1450687186}
+      addedObject: {fileID: 1450687192}
   m_SourcePrefab: {fileID: 100100000, guid: b553840ca33790942a6332d4fdb78d31, type: 3}
 --- !u!1 &528481365 stripped
 GameObject:
@@ -2636,33 +2591,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Purchawka
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: -5
   respawnTime: 30
---- !u!64 &528481370
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &528481377 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: bc948a7cc4c96404a8f06c196e181ed6, type: 3}
+  m_PrefabInstance: {fileID: 1202850002}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 528481365}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 4c99f15abbfec7e429f9e2f0e7ea9266, type: 3}
---- !u!65 &528481374
+--- !u!65 &528481380
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2681,13 +2622,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.76437056, y: 0.7643705, z: 0.86163795}
-  m_Center: {x: 4.396063e-24, y: -0.00000007919244, z: 0.33215722}
---- !u!4 &528481377 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: bc948a7cc4c96404a8f06c196e181ed6, type: 3}
-  m_PrefabInstance: {fileID: 1202850002}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 0.76437056, y: 0.7643705, z: 1.19}
+  m_Center: {x: 0.0000038146973, y: 0.00000039764473, z: -0.4}
 --- !u!4 &540227872 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1578460536694855304, guid: 4cea0722e8b32be47b19607773a7e310, type: 3}
@@ -2759,13 +2695,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: f584f51e1b586534d97eb8302000a293, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2049083201}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: f584f51e1b586534d97eb8302000a293, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2049083200}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: f584f51e1b586534d97eb8302000a293, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2049083205}
+      addedObject: {fileID: 2049083211}
   m_SourcePrefab: {fileID: 100100000, guid: f584f51e1b586534d97eb8302000a293, type: 3}
 --- !u!1001 &596725818
 PrefabInstance:
@@ -2917,6 +2850,142 @@ MonoBehaviour:
   timeLeft: 300
   timerText: {fileID: 1911805025}
   endGameManager: {fileID: 146188552}
+--- !u!1 &607794289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 607794290}
+  - component: {fileID: 607794292}
+  - component: {fileID: 607794291}
+  m_Layer: 5
+  m_Name: MushroomInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &607794290
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607794289}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 125147010}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -450}
+  m_SizeDelta: {x: -1000, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &607794291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607794289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 727796da62106df4489ef16feadcd6ac, type: 2}
+  m_sharedMaterial: {fileID: 2701585089507545850, guid: 727796da62106df4489ef16feadcd6ac, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 2533359615
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &607794292
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607794289}
+  m_CullTransparentMesh: 1
 --- !u!1 &609607131 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: e217e67d0c1bea542a0155d5b3f6cb82, type: 3}
@@ -2934,33 +3003,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Borowik Szlachetny (Gromada)
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: 30
   respawnTime: 30
---- !u!64 &609607136
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &609607143 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: e217e67d0c1bea542a0155d5b3f6cb82, type: 3}
+  m_PrefabInstance: {fileID: 709150542}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 609607131}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 452e688c2be81f849b95719f48efed7d, type: 3}
---- !u!65 &609607140
+--- !u!65 &609607146
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2979,13 +3034,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.8529358, y: 1.9420557, z: 0.9928069}
-  m_Center: {x: -0.047366977, y: -0.020778447, z: 0.36662436}
---- !u!4 &609607143 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: e217e67d0c1bea542a0155d5b3f6cb82, type: 3}
-  m_PrefabInstance: {fileID: 709150542}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 1.8529358, y: 1.9420557, z: 1.19}
+  m_Center: {x: -0.047366977, y: -0.020778447, z: -0.4}
 --- !u!1001 &625889113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3060,33 +3110,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Borowik Szlachetny (Rodzina)
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: 20
   respawnTime: 30
---- !u!64 &625939626
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &625939633 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: ddb75a12231f3864fa051295bfb2cfe2, type: 3}
+  m_PrefabInstance: {fileID: 371847859}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 625939621}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 452e688c2be81f849b95719f48efed7d, type: 3}
---- !u!65 &625939630
+--- !u!65 &625939636
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3105,13 +3141,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1112759, y: 1.295362, z: 0.8353967}
-  m_Center: {x: -0.0143353045, y: -0.050406694, z: 0.32248893}
---- !u!4 &625939633 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: ddb75a12231f3864fa051295bfb2cfe2, type: 3}
-  m_PrefabInstance: {fileID: 371847859}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 1.1112759, y: 1.295362, z: 1.19}
+  m_Center: {x: -0.0143353045, y: -0.050406694, z: -0.4}
 --- !u!1 &634217843 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 6817983542e556d43b6f8faeae9029a6, type: 3}
@@ -3129,33 +3160,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Muchomor Czerwony
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: -30
   respawnTime: 30
---- !u!64 &634217848
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &634217855 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 6817983542e556d43b6f8faeae9029a6, type: 3}
+  m_PrefabInstance: {fileID: 1822565701}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 634217843}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: b775037790334bb44a37be6228e33be4, type: 3}
---- !u!65 &634217852
+--- !u!65 &634217858
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3174,13 +3191,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7930314, y: 0.7933197, z: 1.346872}
-  m_Center: {x: -0.0041748006, y: -0.0006606227, z: 0.53937113}
---- !u!4 &634217855 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 6817983542e556d43b6f8faeae9029a6, type: 3}
-  m_PrefabInstance: {fileID: 1822565701}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 0.7930314, y: 0.7933197, z: 1.19}
+  m_Center: {x: -0.0041743238, y: -0.0006603843, z: -0.4}
 --- !u!1 &634811486 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1656226002977108, guid: e191e21fcb275784a9f8b6d08dcd932c, type: 3}
@@ -3361,13 +3373,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: e217e67d0c1bea542a0155d5b3f6cb82, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 609607136}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: e217e67d0c1bea542a0155d5b3f6cb82, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 609607135}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: e217e67d0c1bea542a0155d5b3f6cb82, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 609607140}
+      addedObject: {fileID: 609607146}
   m_SourcePrefab: {fileID: 100100000, guid: e217e67d0c1bea542a0155d5b3f6cb82, type: 3}
 --- !u!1001 &740681590
 PrefabInstance:
@@ -3511,7 +3520,7 @@ GameObject:
   - component: {fileID: 748388060}
   - component: {fileID: 748388059}
   m_Layer: 5
-  m_Name: Image
+  m_Name: CrosshairDefault
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3534,7 +3543,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 6, y: 6}
+  m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &748388059
 MonoBehaviour:
@@ -3556,7 +3565,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 90a340fc3133448ba99eb98040c08c80, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3813,13 +3822,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 7573e16445309ac428f30f515a817582, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 346074819}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 7573e16445309ac428f30f515a817582, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 346074818}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 7573e16445309ac428f30f515a817582, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 346074823}
+      addedObject: {fileID: 346074829}
   m_SourcePrefab: {fileID: 100100000, guid: 7573e16445309ac428f30f515a817582, type: 3}
 --- !u!4 &768838337 stripped
 Transform:
@@ -3991,13 +3997,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 2bc296aba4ec7f14ca89b9d420594533, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 378180597}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 2bc296aba4ec7f14ca89b9d420594533, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 378180596}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 2bc296aba4ec7f14ca89b9d420594533, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 378180601}
+      addedObject: {fileID: 378180607}
   m_SourcePrefab: {fileID: 100100000, guid: 2bc296aba4ec7f14ca89b9d420594533, type: 3}
 --- !u!1 &909526579 stripped
 GameObject:
@@ -4016,33 +4019,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Podgrzybek Brunatny (Gromada)
   score: {fileID: 1604874638}
-  scoreValue: 15
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
+  scoreValue: 25
   respawnTime: 30
---- !u!64 &909526584
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &909526591 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: e3bf816f244144b4491962dff9f3e2b9, type: 3}
+  m_PrefabInstance: {fileID: 108890067}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 909526579}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: 36abc95f2d037164d839823f96ff9136, type: 3}
---- !u!65 &909526588
+--- !u!65 &909526594
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4061,13 +4050,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.3853368, y: 1.6531149, z: 0.88586885}
-  m_Center: {x: -0.045448802, y: 0.033537548, z: 0.36494538}
---- !u!4 &909526591 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: e3bf816f244144b4491962dff9f3e2b9, type: 3}
-  m_PrefabInstance: {fileID: 108890067}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 1.3853368, y: 1.6531149, z: 1.19}
+  m_Center: {x: -0.045448832, y: 0.033538025, z: -0.4}
 --- !u!1001 &911461566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4134,13 +4118,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 6a4c6b8fd7be8c2409063d469835da86, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 967608451}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 6a4c6b8fd7be8c2409063d469835da86, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 967608450}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 6a4c6b8fd7be8c2409063d469835da86, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 967608455}
+      addedObject: {fileID: 967608461}
   m_SourcePrefab: {fileID: 100100000, guid: 6a4c6b8fd7be8c2409063d469835da86, type: 3}
 --- !u!1 &920642547
 GameObject:
@@ -4272,33 +4253,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Muchomor Cytrynowy
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: -10
   respawnTime: 30
---- !u!64 &941718808
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &941718815 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 8d90f02b522af8f47b0531adb234b285, type: 3}
+  m_PrefabInstance: {fileID: 430824703}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941718803}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 0eff981a16f2c8440a3fcd9c00b5e402, type: 3}
---- !u!65 &941718812
+--- !u!65 &941718818
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4317,13 +4284,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.55117244, y: 0.62727344, z: 0.661638}
-  m_Center: {x: 0.005540195, y: -0.009543026, z: 0.2820906}
---- !u!4 &941718815 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 8d90f02b522af8f47b0531adb234b285, type: 3}
-  m_PrefabInstance: {fileID: 430824703}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 0.55117244, y: 0.62727344, z: 1.19}
+  m_Center: {x: 0.005543056, y: -0.009542787, z: -0.4}
 --- !u!1 &967608446 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 6a4c6b8fd7be8c2409063d469835da86, type: 3}
@@ -4341,33 +4303,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Muchomor Czerwony (Gromada)
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: -50
   respawnTime: 30
---- !u!64 &967608451
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &967608458 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 6a4c6b8fd7be8c2409063d469835da86, type: 3}
+  m_PrefabInstance: {fileID: 911461566}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967608446}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: b775037790334bb44a37be6228e33be4, type: 3}
---- !u!65 &967608455
+--- !u!65 &967608461
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4386,13 +4334,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.3970228, y: 1.0871626, z: 1.3877211}
-  m_Center: {x: 0.048944496, y: 0.046031073, z: 0.6015844}
---- !u!4 &967608458 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 6a4c6b8fd7be8c2409063d469835da86, type: 3}
-  m_PrefabInstance: {fileID: 911461566}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 1.3970228, y: 1.0871626, z: 1.19}
+  m_Center: {x: 0.048944972, y: 0.04603155, z: -0.4}
 --- !u!1 &980809864
 GameObject:
   m_ObjectHideFlags: 0
@@ -4592,13 +4535,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: a49f22f7e433c124687a159e91721193, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1373109734}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: a49f22f7e433c124687a159e91721193, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1373109733}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: a49f22f7e433c124687a159e91721193, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1373109738}
+      addedObject: {fileID: 1373109744}
   m_SourcePrefab: {fileID: 100100000, guid: a49f22f7e433c124687a159e91721193, type: 3}
 --- !u!1 &1034901158 stripped
 GameObject:
@@ -4617,33 +4557,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Muchomor Czerwony (Rodzina)
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: -40
   respawnTime: 30
---- !u!64 &1034901163
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &1034901170 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 1b2cb6ab7beb7d14ba0892a6886994bb, type: 3}
+  m_PrefabInstance: {fileID: 1551537848}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1034901158}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: b775037790334bb44a37be6228e33be4, type: 3}
---- !u!65 &1034901167
+--- !u!65 &1034901173
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4662,13 +4588,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9024762, y: 0.7237527, z: 0.9907715}
-  m_Center: {x: 0.03168644, y: 0.045892768, z: 0.38961604}
---- !u!4 &1034901170 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 1b2cb6ab7beb7d14ba0892a6886994bb, type: 3}
-  m_PrefabInstance: {fileID: 1551537848}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 0.9024762, y: 0.7237527, z: 1.19}
+  m_Center: {x: 0.031686917, y: 0.045893244, z: -0.4}
 --- !u!1 &1040356115
 GameObject:
   m_ObjectHideFlags: 0
@@ -4803,13 +4724,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 2535bd96c70602f4ea9f43716c474f0e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1299932365}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 2535bd96c70602f4ea9f43716c474f0e, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1299932366}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 2535bd96c70602f4ea9f43716c474f0e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1299932370}
+      addedObject: {fileID: 1299932376}
   m_SourcePrefab: {fileID: 100100000, guid: 2535bd96c70602f4ea9f43716c474f0e, type: 3}
 --- !u!1 &1099644462 stripped
 GameObject:
@@ -4828,33 +4746,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Podgrzybek Brunatny (Rodzina)
   score: {fileID: 1604874638}
-  scoreValue: 10
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
+  scoreValue: 15
   respawnTime: 30
---- !u!64 &1099644467
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &1099644474 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: ef3910105b0b2444cb7ae77614d7def7, type: 3}
+  m_PrefabInstance: {fileID: 1584251042}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099644462}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 36abc95f2d037164d839823f96ff9136, type: 3}
---- !u!65 &1099644471
+--- !u!65 &1099644477
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4873,13 +4777,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0920026, y: 1.1654058, z: 0.7573623}
-  m_Center: {x: 0.00638983, y: -0.022241201, z: 0.33576936}
---- !u!4 &1099644474 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: ef3910105b0b2444cb7ae77614d7def7, type: 3}
-  m_PrefabInstance: {fileID: 1584251042}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 1.0920026, y: 1.1654058, z: 1.19}
+  m_Center: {x: 0.0063898074, y: -0.022240724, z: -0.4}
 --- !u!4 &1112505647 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1578460536694855304, guid: 4cea0722e8b32be47b19607773a7e310, type: 3}
@@ -4972,13 +4871,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: d7cc6b9e9cc155f48a34f135e3769544, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1309582213}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: d7cc6b9e9cc155f48a34f135e3769544, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1309582212}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: d7cc6b9e9cc155f48a34f135e3769544, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1309582217}
+      addedObject: {fileID: 1309582223}
   m_SourcePrefab: {fileID: 100100000, guid: d7cc6b9e9cc155f48a34f135e3769544, type: 3}
 --- !u!224 &1146341372 stripped
 RectTransform:
@@ -5204,13 +5100,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: bc948a7cc4c96404a8f06c196e181ed6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 528481370}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: bc948a7cc4c96404a8f06c196e181ed6, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 528481369}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: bc948a7cc4c96404a8f06c196e181ed6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 528481374}
+      addedObject: {fileID: 528481380}
   m_SourcePrefab: {fileID: 100100000, guid: bc948a7cc4c96404a8f06c196e181ed6, type: 3}
 --- !u!1001 &1212029328
 PrefabInstance:
@@ -5486,33 +5379,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Maslak Daglezjowy
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: 40
   respawnTime: 30
---- !u!64 &1261968790
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &1261968797 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 1a340bb9e6c40f14c91cc6a0f9c723a5, type: 3}
+  m_PrefabInstance: {fileID: 438176957}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1261968785}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: b02fa3a98a20b7346ae44c44b08c941b, type: 3}
---- !u!65 &1261968794
+--- !u!65 &1261968800
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5531,13 +5410,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.80624074, y: 0.8073046, z: 0.85077435}
-  m_Center: {x: -0.035891265, y: -0.0072111636, z: 0.32364818}
---- !u!4 &1261968797 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 1a340bb9e6c40f14c91cc6a0f9c723a5, type: 3}
-  m_PrefabInstance: {fileID: 438176957}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 0.80624074, y: 0.8073046, z: 1.19}
+  m_Center: {x: -0.035891265, y: -0.0072111636, z: -0.4}
 --- !u!1001 &1293628202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5604,41 +5478,16 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 6fb44b1a23149c341b72711c71284ab9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1844162600}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 6fb44b1a23149c341b72711c71284ab9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1844162599}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 6fb44b1a23149c341b72711c71284ab9, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1844162598}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 6fb44b1a23149c341b72711c71284ab9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1844162603}
   m_SourcePrefab: {fileID: 100100000, guid: 6fb44b1a23149c341b72711c71284ab9, type: 3}
 --- !u!1 &1299932361 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 2535bd96c70602f4ea9f43716c474f0e, type: 3}
   m_PrefabInstance: {fileID: 1076186376}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1299932365
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299932361}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: 452e688c2be81f849b95719f48efed7d, type: 3}
 --- !u!114 &1299932366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5651,11 +5500,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Borowik szlachetny
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: 10
   respawnTime: 30
---- !u!65 &1299932370
+--- !u!4 &1299932373 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 2535bd96c70602f4ea9f43716c474f0e, type: 3}
+  m_PrefabInstance: {fileID: 1076186376}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1299932376
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5674,13 +5531,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.76341224, y: 0.77891845, z: 0.8019533}
-  m_Center: {x: -0.029644743, y: -0.00069005805, z: 0.30576727}
---- !u!4 &1299932373 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 2535bd96c70602f4ea9f43716c474f0e, type: 3}
-  m_PrefabInstance: {fileID: 1076186376}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 0.76341224, y: 0.77891845, z: 1.19}
+  m_Center: {x: -0.029644743, y: -0.0006905349, z: -0.4}
 --- !u!1001 &1307740468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5775,33 +5627,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Muchomor Plamisty
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: -100
   respawnTime: 30
---- !u!64 &1309582213
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &1309582220 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: d7cc6b9e9cc155f48a34f135e3769544, type: 3}
+  m_PrefabInstance: {fileID: 1128766944}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309582208}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: d6d4f067f49f91d4ab7aa82137826e1b, type: 3}
---- !u!65 &1309582217
+--- !u!65 &1309582223
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5820,13 +5658,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7139144, y: 0.7013645, z: 0.9424507}
-  m_Center: {x: -0.0008634184, y: -0.0074399724, z: 0.37364784}
---- !u!4 &1309582220 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: d7cc6b9e9cc155f48a34f135e3769544, type: 3}
-  m_PrefabInstance: {fileID: 1128766944}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 0.7139144, y: 0.7013645, z: 1.19}
+  m_Center: {x: -0.0008634184, y: -0.007439734, z: -0.4}
 --- !u!1001 &1318411724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6200,13 +6033,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: b6fc76f97855513488ef7395b4e73d21, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2137490783}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: b6fc76f97855513488ef7395b4e73d21, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2137490793}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: b6fc76f97855513488ef7395b4e73d21, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2137490787}
+      addedObject: {fileID: 2137490796}
   m_SourcePrefab: {fileID: 100100000, guid: b6fc76f97855513488ef7395b4e73d21, type: 3}
 --- !u!1 &1373109729 stripped
 GameObject:
@@ -6225,33 +6055,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Purchawka (Rodzina)
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: -10
   respawnTime: 30
---- !u!64 &1373109734
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &1373109741 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: a49f22f7e433c124687a159e91721193, type: 3}
+  m_PrefabInstance: {fileID: 986155714}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1373109729}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: 4c99f15abbfec7e429f9e2f0e7ea9266, type: 3}
---- !u!65 &1373109738
+--- !u!65 &1373109744
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6270,13 +6086,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.040277, y: 1.1022272, z: 0.7541033}
-  m_Center: {x: 0.06822926, y: -0.022079179, z: 0.27923712}
---- !u!4 &1373109741 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: a49f22f7e433c124687a159e91721193, type: 3}
-  m_PrefabInstance: {fileID: 986155714}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 1.040277, y: 1.1022272, z: 1.19}
+  m_Center: {x: 0.06823212, y: -0.022078225, z: -0.4}
 --- !u!4 &1397424709 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1578460536694855304, guid: 4cea0722e8b32be47b19607773a7e310, type: 3}
@@ -6324,33 +6135,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Muchomor Cytrynowy (Rodzina)
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: -20
   respawnTime: 30
---- !u!64 &1450687182
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &1450687189 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: b553840ca33790942a6332d4fdb78d31, type: 3}
+  m_PrefabInstance: {fileID: 523945024}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1450687177}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 0eff981a16f2c8440a3fcd9c00b5e402, type: 3}
---- !u!65 &1450687186
+--- !u!65 &1450687192
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6369,13 +6166,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.6908034, y: 0.6865478, z: 0.96222043}
-  m_Center: {x: 0.027409254, y: -0.02522504, z: 0.39734614}
---- !u!4 &1450687189 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: b553840ca33790942a6332d4fdb78d31, type: 3}
-  m_PrefabInstance: {fileID: 523945024}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 0.6908034, y: 0.6865478, z: 1.19}
+  m_Center: {x: 0.027412115, y: -0.025224801, z: -0.4}
 --- !u!1 &1489970235 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 7dc8c408cf9eedb42bdd617a5b33750a, type: 3}
@@ -6643,7 +6435,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.55926, y: 0.7206065, z: 0.55926}
+  m_LocalScale: {x: 0.5, y: 0.7, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 128737760}
@@ -6790,13 +6582,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 1b2cb6ab7beb7d14ba0892a6886994bb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1034901163}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 1b2cb6ab7beb7d14ba0892a6886994bb, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1034901162}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 1b2cb6ab7beb7d14ba0892a6886994bb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1034901167}
+      addedObject: {fileID: 1034901173}
   m_SourcePrefab: {fileID: 100100000, guid: 1b2cb6ab7beb7d14ba0892a6886994bb, type: 3}
 --- !u!1001 &1584251042
 PrefabInstance:
@@ -6864,13 +6653,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: ef3910105b0b2444cb7ae77614d7def7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1099644467}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: ef3910105b0b2444cb7ae77614d7def7, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1099644466}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: ef3910105b0b2444cb7ae77614d7def7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1099644471}
+      addedObject: {fileID: 1099644477}
   m_SourcePrefab: {fileID: 100100000, guid: ef3910105b0b2444cb7ae77614d7def7, type: 3}
 --- !u!1 &1601515466
 GameObject:
@@ -7065,7 +6851,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Wynik:'
+  m_text: 'Score:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a5385aae7de2b72468a70f539d4a58a2, type: 2}
   m_sharedMaterial: {fileID: 8014608351876078378, guid: a5385aae7de2b72468a70f539d4a58a2, type: 2}
@@ -7373,6 +7159,142 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1827223606}
   m_SourcePrefab: {fileID: 100100000, guid: 63aed3422d268be45a19642d59895c49, type: 3}
+--- !u!1 &1647563878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1647563879}
+  - component: {fileID: 1647563881}
+  - component: {fileID: 1647563880}
+  m_Layer: 5
+  m_Name: ScoreInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1647563879
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647563878}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 33992534}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -75}
+  m_SizeDelta: {x: 500, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1647563880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647563878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: a5385aae7de2b72468a70f539d4a58a2, type: 2}
+  m_sharedMaterial: {fileID: 8014608351876078378, guid: a5385aae7de2b72468a70f539d4a58a2, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 20
+  m_fontSizeBase: 20
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1647563881
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647563878}
+  m_CullTransparentMesh: 1
 --- !u!1 &1654787542 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1081485305171292, guid: c23a5db78ca1a5b4f921e0109f33128c, type: 3}
@@ -8032,13 +7954,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 6817983542e556d43b6f8faeae9029a6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 634217848}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 6817983542e556d43b6f8faeae9029a6, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 634217847}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 6817983542e556d43b6f8faeae9029a6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 634217852}
+      addedObject: {fileID: 634217858}
   m_SourcePrefab: {fileID: 100100000, guid: 6817983542e556d43b6f8faeae9029a6, type: 3}
 --- !u!1 &1827223602 stripped
 GameObject:
@@ -8155,11 +8074,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Muchomor czerwony
   score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
   scoreValue: -15
   respawnTime: 30
---- !u!65 &1844162599
+--- !u!65 &1844162603
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8178,30 +8100,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.76341224, y: 0.77891827, z: 0.80195314}
-  m_Center: {x: -0.029644743, y: -0.0006900579, z: 0.3057672}
---- !u!64 &1844162600
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1844162596}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: 452e688c2be81f849b95719f48efed7d, type: 3}
+  m_Size: {x: 0.76341224, y: 0.77891827, z: 1.19}
+  m_Center: {x: -0.029644743, y: -0.0006900579, z: -0.4}
 --- !u!1001 &1855323987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8572,33 +8472,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Przedmiot
+  itemName: Podgrzybek Brunatny
   score: {fileID: 1604874638}
-  scoreValue: 5
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
+  scoreValue: 10
   respawnTime: 30
---- !u!64 &2049083201
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &2049083208 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: f584f51e1b586534d97eb8302000a293, type: 3}
+  m_PrefabInstance: {fileID: 557510162}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2049083196}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 36abc95f2d037164d839823f96ff9136, type: 3}
---- !u!65 &2049083205
+--- !u!65 &2049083211
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8617,13 +8503,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.77213025, y: 0.7841044, z: 0.81540227}
-  m_Center: {x: 0.02019892, y: -0.00035612562, z: 0.32370695}
---- !u!4 &2049083208 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: f584f51e1b586534d97eb8302000a293, type: 3}
-  m_PrefabInstance: {fileID: 557510162}
-  m_PrefabAsset: {fileID: 0}
+  m_Size: {x: 0.77213025, y: 0.7841044, z: 1.19}
+  m_Center: {x: 0.02019891, y: -0.0003558872, z: -0.4}
 --- !u!1001 &2063460208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8825,29 +8706,31 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: b6fc76f97855513488ef7395b4e73d21, type: 3}
   m_PrefabInstance: {fileID: 1366868179}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &2137490783
-MeshCollider:
+--- !u!4 &2137490790 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: b6fc76f97855513488ef7395b4e73d21, type: 3}
+  m_PrefabInstance: {fileID: 1366868179}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2137490793
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2137490779}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 0eff981a16f2c8440a3fcd9c00b5e402, type: 3}
---- !u!65 &2137490787
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Muchomor Sromotnikowy
+  score: {fileID: 1604874638}
+  scoreInfo: {fileID: 1647563880}
+  popupDuration: 2
+  startOffsetY: 15
+  scoreValue: -10
+  respawnTime: 30
+--- !u!65 &2137490796
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8866,29 +8749,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.55117244, y: 0.62727344, z: 0.661638}
-  m_Center: {x: 0.005540195, y: -0.009543026, z: 0.2820906}
---- !u!4 &2137490790 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: b6fc76f97855513488ef7395b4e73d21, type: 3}
-  m_PrefabInstance: {fileID: 1366868179}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2137490793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2137490779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7547d77e0723045478638b0052303147, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: Przedmiot
-  score: {fileID: 1604874638}
-  scoreValue: -10
-  respawnTime: 30
+  m_Size: {x: 0.55117244, y: 0.62727344, z: 1.19}
+  m_Center: {x: 0.005543056, y: -0.009542907, z: -0.4}
 --- !u!1001 &110341966878074435
 PrefabInstance:
   m_ObjectHideFlags: 0
