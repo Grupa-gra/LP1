@@ -1688,6 +1688,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -30
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &346074826 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 7573e16445309ac428f30f515a817582, type: 3}
@@ -1906,6 +1908,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -15
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &378180604 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 2bc296aba4ec7f14ca89b9d420594533, type: 3}
@@ -2597,6 +2601,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -5
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &528481377 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: bc948a7cc4c96404a8f06c196e181ed6, type: 3}
@@ -3009,6 +3015,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: 30
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &609607143 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: e217e67d0c1bea542a0155d5b3f6cb82, type: 3}
@@ -3116,6 +3124,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: 20
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &625939633 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: ddb75a12231f3864fa051295bfb2cfe2, type: 3}
@@ -3166,6 +3176,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -30
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &634217855 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 6817983542e556d43b6f8faeae9029a6, type: 3}
@@ -4025,6 +4037,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: 25
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &909526591 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: e3bf816f244144b4491962dff9f3e2b9, type: 3}
@@ -4259,6 +4273,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -10
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &941718815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 8d90f02b522af8f47b0531adb234b285, type: 3}
@@ -4309,6 +4325,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -50
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &967608458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 6a4c6b8fd7be8c2409063d469835da86, type: 3}
@@ -4563,6 +4581,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -40
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &1034901170 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 1b2cb6ab7beb7d14ba0892a6886994bb, type: 3}
@@ -4752,6 +4772,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: 15
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &1099644474 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: ef3910105b0b2444cb7ae77614d7def7, type: 3}
@@ -5385,6 +5407,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: 40
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &1261968797 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 1a340bb9e6c40f14c91cc6a0f9c723a5, type: 3}
@@ -5506,6 +5530,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: 10
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &1299932373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 2535bd96c70602f4ea9f43716c474f0e, type: 3}
@@ -5633,6 +5659,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -100
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &1309582220 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: d7cc6b9e9cc155f48a34f135e3769544, type: 3}
@@ -5760,13 +5788,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 146188552}
     - target: {fileID: 3020288327257763600, guid: d3f87f114f86a3b4f88996e8d2e99fd8, type: 3}
+      propertyPath: towerBuffRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3020288327257763600, guid: d3f87f114f86a3b4f88996e8d2e99fd8, type: 3}
+      propertyPath: waitAtPointTime
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3020288327257763600, guid: d3f87f114f86a3b4f88996e8d2e99fd8, type: 3}
       propertyPath: gameStateManager
       value: 
       objectReference: {fileID: 146188553}
     - target: {fileID: 3020288327257763600, guid: d3f87f114f86a3b4f88996e8d2e99fd8, type: 3}
+      propertyPath: patrolReachDistance
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3020288327257763600, guid: d3f87f114f86a3b4f88996e8d2e99fd8, type: 3}
+      propertyPath: towerVisionMultiplier
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3020288327257763600, guid: d3f87f114f86a3b4f88996e8d2e99fd8, type: 3}
+      propertyPath: patrolPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3020288327257763600, guid: d3f87f114f86a3b4f88996e8d2e99fd8, type: 3}
       propertyPath: 'patrolPoints.Array.data[0]'
       value: 
-      objectReference: {fileID: 540227872}
+      objectReference: {fileID: 358034953}
     - target: {fileID: 3020288327257763600, guid: d3f87f114f86a3b4f88996e8d2e99fd8, type: 3}
       propertyPath: 'patrolPoints.Array.data[1]'
       value: 
@@ -6069,6 +6117,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -10
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &1373109741 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: a49f22f7e433c124687a159e91721193, type: 3}
@@ -6149,6 +6199,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -20
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &1450687189 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b553840ca33790942a6332d4fdb78d31, type: 3}
@@ -8088,6 +8140,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -15
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!65 &1844162603
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8486,6 +8540,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: 10
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!4 &2049083208 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f584f51e1b586534d97eb8302000a293, type: 3}
@@ -8737,6 +8793,8 @@ MonoBehaviour:
   startOffsetY: 15
   scoreValue: -10
   respawnTime: 30
+  growDuration: 0.5
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!65 &2137490796
 BoxCollider:
   m_ObjectHideFlags: 0
