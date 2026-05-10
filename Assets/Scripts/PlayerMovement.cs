@@ -3,7 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    public Camera playerCamera;
+    // public Camera playerCamera;
+    private Camera playerCamera;
     public float walkSpeed = 16f;
     public float runSpeed = 22f;
     public float jumpPower = 0f;
@@ -37,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        playerCamera = Camera.main;
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -50,7 +52,10 @@ public class PlayerMovement : MonoBehaviour
         char[] vChars = { (char)86, (char)101, (char)114, (char)116, (char)105, (char)99, (char)97, (char)108 };
         vertical = new string(vChars);
 
-        char[] hChars = { (char)72, (char)111, (char)114, (char)105, (char)122, (char)111, (char)110, (char)116, (char)97, (char)108 };
+        char[] hChars =
+        {
+            (char)72, (char)111, (char)114, (char)105, (char)122, (char)111, (char)110, (char)116, (char)97, (char)108
+        };
         horizontal = new string(hChars);
 
         char[] jChars = { (char)74, (char)117, (char)109, (char)112 };
@@ -104,7 +109,8 @@ public class PlayerMovement : MonoBehaviour
             runSpeed = defaultRunSpeed;
         }
 
-        characterController.height = Mathf.Lerp(characterController.height, targetHeight, crouchSmoothSpeed * Time.deltaTime);
+        characterController.height =
+            Mathf.Lerp(characterController.height, targetHeight, crouchSmoothSpeed * Time.deltaTime);
 
         Vector3 newCenter = characterController.center;
         newCenter.y = Mathf.Lerp(characterController.center.y, targetCenterY, crouchSmoothSpeed * Time.deltaTime);
