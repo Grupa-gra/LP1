@@ -15,7 +15,11 @@ public class GuardNoedifyAI : MonoBehaviour
     private string saveDirectory;
     private string modelName = "GuardBrainModel";
 
-    [Header("Agent Settings")]
+    [Header("Statystki Stra¿nika")]
+    public float currentViewDistance;
+    public float currentHearDistance;
+
+    [Header("Ustawienia Stra¿nika")]
     public Transform player;
     public float viewDistance = 15f;
     public float viewAngle = 90f;
@@ -24,42 +28,38 @@ public class GuardNoedifyAI : MonoBehaviour
     public float moveSpeedMultiplier = 1f;
     public float suspicion = 0f;
 
-    [Header("Live Stats (Podgl¹d w grze)")]
-    public float currentViewDistance; // To poka¿e wzrastaj¹cy dystans
-    public float currentHearDistance; // To poka¿e wzrastaj¹cy s³uch
+    [Header("Modyfikatory")]
+    public float sprintMultiplier = 1.5f;
+    public float sprintHearMultiplier = 5f;
+    public float crouchHearMultiplier = 0.3f;
 
-    [Header("Tower Settings")]
+    [Header("Ustawienia Wie¿ Stra¿nika")]
     public float towerBuffRange = 100f;
     public float towerVisionMultiplier = 4f;
     public float patrolReachDistance = 100f;
     private bool isNearTower = false;
 
-    [Header("Modifiers")]
-    public float sprintMultiplier = 1.5f;
-    public float sprintHearMultiplier = 5f;
-    public float crouchHearMultiplier = 0.3f;
-
-    [Header("Investigate Settings")]
+    [Header("Ustawienia Œledztwa Stra¿nika")]
     public float investigateViewMultiplier = 1.5f;
     public float investigateAngleMultiplier = 1.5f;
     public float investigateHearMultiplier = 1.5f;
 
-    [Header("Game Over Settings")]
-    public float captureDistance = 1.5f;
-    public GameObject deathUIScreen;
-
-    [Header("Patrol System")]
+    [Header("System Patrolu")]
     public Transform[] patrolPoints;
     public float waitAtPointTime = 0.5f;
     private int currentPointIndex = 0;
     private float waitTimer = 0f;
     private bool isWaiting = false;
 
-    [Header("Performance Settings")]
+    [Header("Ustawienia Koñca Gry")]
+    public float captureDistance = 1.5f;
+    public GameObject deathUIScreen;
+
+    [Header("Ustawienia Dodatkowe")]
     public float aiThinkInterval = 0.1f;
     private float aiThinkTimer = 0f;
 
-    [Header("Training Settings")]
+    [Header("Trenowanie Sieci Neuronowej")]
     public bool trainingMode = true;
     public float learningRate = 0.05f;
     public int trainingEpochs = 2000;
@@ -90,10 +90,8 @@ public class GuardNoedifyAI : MonoBehaviour
             agent.angularSpeed = 600f;
             agent.autoBraking = false;
         }
-
         lastKnownPosition = transform.position;
         saveDirectory = Application.persistentDataPath;
-
         solver = Noedify.CreateSolver();
 
         InitializeNoedifyNetwork();
@@ -143,17 +141,14 @@ public class GuardNoedifyAI : MonoBehaviour
         }
     }
 
-    // NOWA FUNKCJA: Oblicza zasiêgi raz na klatkê, ¿ebyœ widzia³ je w inspektorze
     void CalculateCurrentStats()
     {
-        // Widzenie
         float tempView = viewDistance;
         if (isNearTower) tempView *= towerVisionMultiplier;
         if (Input.GetKey(KeyCode.LeftShift)) tempView *= sprintMultiplier;
         if (currentAction == (int)Action.Investigate) tempView *= investigateViewMultiplier;
         currentViewDistance = tempView;
 
-        // S³uch
         float tempHear = baseHearDistance;
         if (Input.GetKey(KeyCode.LeftShift)) tempHear *= sprintHearMultiplier;
         else if (Input.GetKey(KeyCode.LeftControl)) tempHear *= crouchHearMultiplier;
@@ -166,7 +161,7 @@ public class GuardNoedifyAI : MonoBehaviour
         if (player == null || isGameOver) return;
 
         isNearTower = CheckIfNearTower();
-        CalculateCurrentStats(); // Aktualizuj statystyki do podgl¹du
+        CalculateCurrentStats();
 
         CheckCapture();
         if (isGameOver) return;
@@ -179,17 +174,19 @@ public class GuardNoedifyAI : MonoBehaviour
             float[] output = GetNetworkPrediction(input);
             int proposedAction = ArgMax(output);
 
-            if (suspicion >= 0.9f)
+            if (suspicion >= 0.85f)
             {
                 proposedAction = (int)Action.Chase;
             }
-
+            else if (suspicion > 0.15f)
+            {
+                proposedAction = (int)Action.Investigate;
+            }
             SaveToMemory(input);
             UpdateActionState(proposedAction);
 
             aiThinkTimer = 0f;
         }
-
         ExecuteAction(currentAction);
         UpdateSuspicionOverTime();
 
@@ -221,7 +218,6 @@ public class GuardNoedifyAI : MonoBehaviour
                 expectedOutputsList.Add(new float[] { 0f, 1f, 0f });
             }
         }
-
         if (solver != null && memoryInputsList.Count > 0)
         {
             solver.TrainNetwork(net, memoryInputsList, expectedOutputsList, 5, memoryInputsList.Count, learningRate, Noedify_Solver.CostFunction.MeanSquare, Noedify_Solver.SolverMethod.MainThread);
@@ -262,7 +258,6 @@ public class GuardNoedifyAI : MonoBehaviour
             {
                 endGameManager.EndGame();
             }
-
             ShowDeathScreen();
         }
     }
@@ -284,20 +279,16 @@ public class GuardNoedifyAI : MonoBehaviour
     float[] GetInputs()
     {
         float dist = Vector3.Distance(transform.position, player.position);
-
-        // U¿ywamy ju¿ obliczonego currentViewDistance
         float distanceNorm = Mathf.Clamp01(dist / currentViewDistance);
         float visible = IsPlayerVisible() ? 1f : 0f;
         float memoryDist = Vector3.Distance(transform.position, lastKnownPosition);
         float memoryNorm = Mathf.Clamp01(memoryDist / viewDistance);
-
         float hearingVolume = 0f;
+
         if (CanHearPlayer())
         {
-            // U¿ywamy ju¿ obliczonego currentHearDistance
             hearingVolume = Mathf.Clamp01(1f - (dist / currentHearDistance));
         }
-
         return new float[] { distanceNorm, visible, suspicion, memoryNorm, hearingVolume };
     }
 
@@ -312,7 +303,7 @@ public class GuardNoedifyAI : MonoBehaviour
             currentViewAngle *= investigateAngleMultiplier;
         }
 
-        if (dist > currentViewDistance) return false; // U¿ywamy aktualnej statystyki
+        if (dist > currentViewDistance) return false;
         if (Vector3.Angle(transform.forward, dir) > currentViewAngle * 0.5f) return false;
 
         Vector3 eyePos = transform.position + Vector3.up * 1.5f;
@@ -328,7 +319,7 @@ public class GuardNoedifyAI : MonoBehaviour
     {
         float dist = Vector3.Distance(transform.position, player.position);
 
-        if (dist <= currentHearDistance) // U¿ywamy aktualnej statystyki
+        if (dist <= currentHearDistance)
         {
             Vector3 eyePos = transform.position + Vector3.up * 1.5f;
             Vector3 targetPos = player.position + Vector3.up * 1.5f;
@@ -353,11 +344,13 @@ public class GuardNoedifyAI : MonoBehaviour
 
     void Patrol()
     {
+        float minDistance = Mathf.Infinity;
+        int closestIndex = currentPointIndex;
+
         if (!agent.isOnNavMesh || patrolPoints == null || patrolPoints.Length == 0) return;
 
         agent.updateRotation = true;
         agent.isStopped = false;
-
         agent.speed = 2.5f * moveSpeedMultiplier;
         agent.acceleration = 10f;
 
@@ -370,7 +363,18 @@ public class GuardNoedifyAI : MonoBehaviour
             if (waitTimer >= waitAtPointTime)
             {
                 isWaiting = false;
-                currentPointIndex = (currentPointIndex + 1) % patrolPoints.Length;
+                for (int i = 0; i < patrolPoints.Length; i++)
+                {
+                    if (i == currentPointIndex) continue;
+
+                    float dist = Vector3.Distance(transform.position, patrolPoints[i].position);
+                    if (dist < minDistance)
+                    {
+                        minDistance = dist;
+                        closestIndex = i;
+                    }
+                }
+                currentPointIndex = closestIndex;
                 agent.SetDestination(patrolPoints[currentPointIndex].position);
             }
         }
@@ -384,14 +388,19 @@ public class GuardNoedifyAI : MonoBehaviour
     {
         if (!agent.isOnNavMesh) return;
         isWaiting = false;
-
-        agent.updateRotation = true;
         agent.isStopped = false;
+        agent.speed = 3.5f * moveSpeedMultiplier;
+        agent.acceleration = 15f;
 
-        if (patrolPoints != null && patrolPoints.Length > 0 && Vector3.Distance(agent.destination, patrolPoints[currentPointIndex].position) > 1.0f)
+        if (Vector3.Distance(agent.destination, lastKnownPosition) > 0.1f)
         {
-            FindClosestPatrolPoint();
-            agent.SetDestination(patrolPoints[currentPointIndex].position);
+            agent.SetDestination(lastKnownPosition);
+        }
+
+        float distToLastPos = Vector3.Distance(transform.position, lastKnownPosition);
+        if (distToLastPos <= 1.5f)
+        {
+            suspicion -= Time.deltaTime * 0.2f;
         }
     }
 
@@ -399,35 +408,16 @@ public class GuardNoedifyAI : MonoBehaviour
     {
         if (!agent.isOnNavMesh) return;
         isWaiting = false;
-
-        agent.updateRotation = true;
         agent.isStopped = false;
-
         agent.speed = 6.5f * moveSpeedMultiplier;
         agent.acceleration = 35f;
 
-        if (IsPlayerVisible() || CanHearPlayer())
-        {
-            lastKnownPosition = player.position;
-            agent.SetDestination(player.position);
-        }
-        else
-        {
-            if (Vector3.Distance(transform.position, lastKnownPosition) > 1.0f)
-            {
-                agent.SetDestination(lastKnownPosition);
-            }
-        }
-    }
+        Vector3 targetPos = (IsPlayerVisible() || CanHearPlayer()) ? player.position : lastKnownPosition;
 
-    void FindClosestPatrolPoint()
-    {
-        if (patrolPoints == null || patrolPoints.Length == 0) return;
-        float minDist = Mathf.Infinity;
-        for (int i = 0; i < patrolPoints.Length; i++)
+        if (Vector3.Distance(agent.destination, targetPos) > 0.5f)
         {
-            float d = Vector3.Distance(transform.position, patrolPoints[i].position);
-            if (d < minDist) { minDist = d; currentPointIndex = i; }
+            agent.SetDestination(targetPos);
+            lastKnownPosition = targetPos;
         }
     }
 
