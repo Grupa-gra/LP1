@@ -66,6 +66,11 @@ public class GuardNoedifyAI : MonoBehaviour
     public int memoryBufferSize = 60;
     private Queue<float[]> memoryBufferInputs = new Queue<float[]>();
 
+    [Header("Ci¹g³e Uczenie")]
+    public bool continuousLearning = true;
+    public float learningInterval = 3f;
+    private float learningTimer = 0f;
+
     private Vector3 lastKnownPosition;
     private NavMeshAgent agent;
     private Animator anim;
@@ -187,6 +192,17 @@ public class GuardNoedifyAI : MonoBehaviour
 
             aiThinkTimer = 0f;
         }
+
+        if (continuousLearning)
+        {
+            learningTimer += Time.deltaTime;
+            if (learningTimer >= learningInterval)
+            {
+                ContinuousLearn();
+                learningTimer = 0f;
+            }
+        }
+
         ExecuteAction(currentAction);
         UpdateSuspicionOverTime();
 
@@ -225,6 +241,41 @@ public class GuardNoedifyAI : MonoBehaviour
 
         memoryBufferInputs.Clear();
         SaveNetworkModel();
+    }
+
+    void ContinuousLearn()
+    {
+        if (memoryBufferInputs.Count == 0) return;
+
+        List<float[,,]> memoryInputsList = new List<float[,,]>();
+        List<float[]> expectedOutputsList = new List<float[]>();
+
+        foreach (var stateInput in memoryBufferInputs)
+        {
+            memoryInputsList.Add(To3D(stateInput));
+
+            float visible = stateInput[1];
+            float pastSuspicion = stateInput[2];
+            float hearingVolume = stateInput[4];
+
+            if (visible > 0.5f || hearingVolume > 0.3f || pastSuspicion > 0.8f)
+            {
+                expectedOutputsList.Add(new float[] { 0f, 0f, 1f });
+            }
+            else if (pastSuspicion > 0.4f)
+            {
+                expectedOutputsList.Add(new float[] { 0f, 1f, 0f });
+            }
+            else
+            {
+                expectedOutputsList.Add(new float[] { 1f, 0f, 0f });
+            }
+        }
+
+        if (solver != null)
+        {
+            solver.TrainNetwork(net, memoryInputsList, expectedOutputsList, 1, memoryInputsList.Count, learningRate, Noedify_Solver.CostFunction.MeanSquare, Noedify_Solver.SolverMethod.MainThread);
+        }
     }
 
     [ContextMenu("Trenuj model Noedify")]
