@@ -178,7 +178,7 @@ public class GuardNoedifyAI : MonoBehaviour
             {
                 proposedAction = (int)Action.Chase;
             }
-            else if (suspicion > 0.15f)
+            else if (suspicion > 0.40f)
             {
                 proposedAction = (int)Action.Investigate;
             }
@@ -321,12 +321,6 @@ public class GuardNoedifyAI : MonoBehaviour
 
         if (dist <= currentHearDistance)
         {
-            Vector3 eyePos = transform.position + Vector3.up * 1.5f;
-            Vector3 targetPos = player.position + Vector3.up * 1.5f;
-            if (Physics.Raycast(eyePos, (targetPos - eyePos).normalized, out RaycastHit hit, currentHearDistance, obstacleMask))
-            {
-                if (hit.transform != player) return false;
-            }
             return true;
         }
         return false;
@@ -344,9 +338,6 @@ public class GuardNoedifyAI : MonoBehaviour
 
     void Patrol()
     {
-        float minDistance = Mathf.Infinity;
-        int closestIndex = currentPointIndex;
-
         if (!agent.isOnNavMesh || patrolPoints == null || patrolPoints.Length == 0) return;
 
         agent.updateRotation = true;
@@ -355,26 +346,28 @@ public class GuardNoedifyAI : MonoBehaviour
         agent.acceleration = 10f;
 
         float distanceToPoint = Vector3.Distance(transform.position, patrolPoints[currentPointIndex].position);
+
         if (!agent.pathPending && distanceToPoint <= patrolReachDistance)
         {
-            if (!isWaiting) { isWaiting = true; waitTimer = 0f; }
+            if (!isWaiting)
+            {
+                isWaiting = true;
+                waitTimer = 0f;
+            }
 
             waitTimer += Time.deltaTime;
             if (waitTimer >= waitAtPointTime)
             {
                 isWaiting = false;
-                for (int i = 0; i < patrolPoints.Length; i++)
-                {
-                    if (i == currentPointIndex) continue;
 
-                    float dist = Vector3.Distance(transform.position, patrolPoints[i].position);
-                    if (dist < minDistance)
-                    {
-                        minDistance = dist;
-                        closestIndex = i;
-                    }
+                int nextPoint = currentPointIndex;
+
+                while (nextPoint == currentPointIndex)
+                {
+                    nextPoint = UnityEngine.Random.Range(0, patrolPoints.Length);
                 }
-                currentPointIndex = closestIndex;
+                currentPointIndex = nextPoint;
+
                 agent.SetDestination(patrolPoints[currentPointIndex].position);
             }
         }
