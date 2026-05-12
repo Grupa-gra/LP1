@@ -1151,6 +1151,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 4813758243756646980}
   anim: {fileID: 8867372405804473313}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  raycastOffset: 1
+  raycastLength: 2
+  alignmentSpeed: 10
 --- !u!114 &3020288327257763600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1163,6 +1169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f447bdd7d7e7584287d10f231ce1fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameStateManager: {fileID: 0}
+  endGameManager: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  currentViewDistance: 0
+  currentHearDistance: 0
   player: {fileID: 0}
   viewDistance: 200
   viewAngle: 180
@@ -1175,21 +1186,21 @@ MonoBehaviour:
   sprintMultiplier: 1.5
   sprintHearMultiplier: 5
   crouchHearMultiplier: 0.3
-  captureDistance: 10
-  deathUIScreen: {fileID: 0}
+  towerBuffRange: 100
+  towerVisionMultiplier: 4
+  patrolReachDistance: 75
+  investigateViewMultiplier: 1.5
+  investigateAngleMultiplier: 1.5
+  investigateHearMultiplier: 1.5
   patrolPoints:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  waitAtPointTime: 2
+  waitAtPointTime: 4
+  captureDistance: 10
+  deathUIScreen: {fileID: 0}
+  aiThinkInterval: 0.1
   trainingMode: 1
   learningRate: 0.1
-  trainingEpochs: 5000
+  trainingEpochs: 2000
   memoryBufferSize: 60
 --- !u!1 &2898702037118956337
 GameObject:

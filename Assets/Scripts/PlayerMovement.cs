@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    public Camera playerCamera;
+    private Camera playerCamera;
     public float walkSpeed = 16f;
     public float runSpeed = 22f;
     public float jumpPower = 0f;
@@ -15,6 +16,12 @@ public class PlayerMovement : MonoBehaviour
     public float crouchSpeed = 3f;
     public float crouchCenterY = 0.5f;
     public float crouchSmoothSpeed = 8f;
+
+    [Header("Stamina Settings")]
+    public Slider staminaSlider;
+    public float maxStamina = 5f;
+    public float staminaRegenMultiplier = 0.5f;
+    private float currentStamina;
 
     private float defaultWalkSpeed;
     private float defaultRunSpeed;
@@ -37,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        playerCamera = Camera.main;
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -45,20 +53,23 @@ public class PlayerMovement : MonoBehaviour
         defaultRunSpeed = runSpeed;
         defaultCenterY = characterController.center.y;
 
+        currentStamina = maxStamina;
+        if (staminaSlider != null)
+        {
+            staminaSlider.maxValue = maxStamina;
+            staminaSlider.value = maxStamina;
+        }
+
         minusOne = Vector3.down.y;
 
         char[] vChars = { (char)86, (char)101, (char)114, (char)116, (char)105, (char)99, (char)97, (char)108 };
         vertical = new string(vChars);
-
         char[] hChars = { (char)72, (char)111, (char)114, (char)105, (char)122, (char)111, (char)110, (char)116, (char)97, (char)108 };
         horizontal = new string(hChars);
-
         char[] jChars = { (char)74, (char)117, (char)109, (char)112 };
         jump = new string(jChars);
-
         char[] mxChars = { (char)77, (char)111, (char)117, (char)115, (char)101, (char)32, (char)88 };
         mouseX = new string(mxChars);
-
         char[] myChars = { (char)77, (char)111, (char)117, (char)115, (char)101, (char)32, (char)89 };
         mouseY = new string(myChars);
     }
@@ -74,7 +85,21 @@ public class PlayerMovement : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        bool isMoving = Input.GetAxis(vertical) != 0 || Input.GetAxis(horizontal) != 0;
+        bool isRunning = Input.GetKey(KeyCode.LeftShift) && isMoving && currentStamina > 0;
+
+        if (isRunning)
+        {
+            currentStamina -= Time.deltaTime;
+        }
+        else if (currentStamina < maxStamina)
+        {
+            currentStamina += Time.deltaTime * staminaRegenMultiplier;
+        }
+
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        if (staminaSlider != null) staminaSlider.value = currentStamina;
+
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis(vertical) : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis(horizontal) : 0;
 
@@ -105,7 +130,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         characterController.height = Mathf.Lerp(characterController.height, targetHeight, crouchSmoothSpeed * Time.deltaTime);
-
         Vector3 newCenter = characterController.center;
         newCenter.y = Mathf.Lerp(characterController.center.y, targetCenterY, crouchSmoothSpeed * Time.deltaTime);
         characterController.center = newCenter;

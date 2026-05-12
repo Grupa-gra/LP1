@@ -22,11 +22,19 @@ public class CollectibleItem : MonoBehaviour, IInteractable
     public float respawnTime = 30f;
     private bool isCollected = false;
 
+    [Header("Grow Animation")]
+    [SerializeField] private float growDuration = 0.5f;
+    [SerializeField] private Vector3 targetScale = Vector3.one;
+
+    private Coroutine growCoroutine;
+
     private RectTransform scoreInfoRect;
     private CanvasGroup scoreInfoGroup;
 
-    private void Awake()
+    private void Start()
     {
+        targetScale = transform.localScale;
+
         if (scoreInfo != null)
         {
             scoreInfoRect = scoreInfo.GetComponent<RectTransform>();
@@ -111,7 +119,33 @@ public class CollectibleItem : MonoBehaviour, IInteractable
 
         ToggleVisibility(true);
 
+        transform.localScale = Vector3.zero;
+
+        if (growCoroutine != null)
+            StopCoroutine(growCoroutine);
+
+        growCoroutine = StartCoroutine(GrowRoutine());
+
         isCollected = false;
+    }
+
+    private IEnumerator GrowRoutine()
+    {
+        float t = 0f;
+
+        while (t < growDuration)
+        {
+            t += Time.deltaTime;
+
+            float progress = t / growDuration;
+            float eased = 1f - Mathf.Pow(1f - progress, 3f);
+
+            transform.localScale = Vector3.Lerp(Vector3.zero, targetScale, eased);
+
+            yield return null;
+        }
+
+        transform.localScale = targetScale;
     }
 
     private void ToggleVisibility(bool state)

@@ -8,8 +8,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private LayerMask Mushrooms;
     [SerializeField] private TextMeshProUGUI promptText;
 
-    [Header("Crosshair")]
-    [SerializeField] private Image crosshair;
+    [Header("Crosshair")] [SerializeField] private Image crosshair;
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private Sprite interactSprite;
 
@@ -35,7 +34,9 @@ public class PlayerInteraction : MonoBehaviour
     void CheckForInteractable()
     {
         Ray ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-
+        // Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.yellow);
+        // Debug.DrawRay(ray.origin, Vector3.up * 0.1f, Color.red);
+        // Debug.DrawRay(ray.origin, Vector3.right * 0.1f, Color.red);
         if (Physics.Raycast(ray, out RaycastHit hit, interactRange, Mushrooms))
         {
             if (((1 << hit.collider.gameObject.layer) & Mushrooms) != 0 &&

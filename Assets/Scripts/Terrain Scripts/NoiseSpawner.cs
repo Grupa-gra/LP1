@@ -15,7 +15,6 @@ public class NoiseSpawner : MonoBehaviour
     public Terrain terrain;
 
     [Header("Granice Generowania")]
-    [Tooltip("Margines od krawędzi terenu dla wież i dodatkowych obiektów")]
     public float terrainPadding = 50f;
 
     [Header("Główne Obiekty")]
@@ -31,25 +30,17 @@ public class NoiseSpawner : MonoBehaviour
     public float minScale2 = 2.0f;
     public float maxScale2 = 4.0f;
 
-    [Header("Dodatkowe Obiekty (Szanują padding)")]
+    [Header("Dodatkowe Obiekty")]
     public SpawnItem[] extraObjectPrefabs;
     public int extraObjectDensity = 500;
     public float extraObjectMinDistance = 5.0f;
 
-    [Header("Wieże Strażnicze (Szanują padding)")]
+    [Header("Wieże Strażnicze")]
     public GameObject watchtowerPrefab;
     public int watchtowerCount = 4;
-
-    [Tooltip("Minimalny dystans między jedną wieżą a drugą")]
     public float watchtowerMinDistance = 100f;
-
-    [Tooltip("Promień wokół wieży, w którym NIE będą rosnąć drzewa ani inne obiekty")]
     public float watchtowerClearance = 25f;
-
-    [Tooltip("O ile wpuścić wieżę w ziemię, aby nie lewitowała na zboczach (wartość ujemna = głębiej w ziemię)")]
     public float watchtowerYOffset = -1.0f;
-
-    [Tooltip("Jeśli zaznaczone, wieża zawsze będzie stać prosto pionowo, ignorując nachylenie stoku.")]
     public bool keepWatchtowerUpright = true;
 
     [Header("Ustawienia Fizyki i Rozmieszczenia")]
@@ -70,8 +61,8 @@ public class NoiseSpawner : MonoBehaviour
 
     private Dictionary<Vector2Int, List<Vector3>> spatialGrid = new Dictionary<Vector2Int, List<Vector3>>();
     private List<GameObject> spawnedObjects = new List<GameObject>();
-
     private List<Vector3> watchtowerPositions = new List<Vector3>();
+    private List<Transform> spawnedTowerTransforms = new List<Transform>();
 
     void Awake()
     {
@@ -156,6 +147,7 @@ public class NoiseSpawner : MonoBehaviour
                         GameObject obj = Instantiate(watchtowerPrefab, towerPos, rotation);
                         obj.SetActive(false);
                         spawnedObjects.Add(obj);
+                        spawnedTowerTransforms.Add(obj.transform);
 
                         break;
                     }
@@ -164,6 +156,7 @@ public class NoiseSpawner : MonoBehaviour
             currentSpawnedTotal++;
             UpdateLoadingBar(currentSpawnedTotal, totalObjectsToSpawn);
         }
+
         for (int i = 0; i < density; i++)
         {
             currentSpawnedTotal++;
@@ -225,6 +218,12 @@ public class NoiseSpawner : MonoBehaviour
 
         foreach (var obj in spawnedObjects) obj.SetActive(true);
 
+        GuardNoedifyAI[] guards = FindObjectsOfType<GuardNoedifyAI>();
+        foreach (var guard in guards)
+        {
+            guard.InitializePatrolPoints(spawnedTowerTransforms.ToArray());
+        }
+
         if (loadingBar != null) loadingBar.value = 1f;
         if (loadingScreen != null) loadingScreen.SetActive(false);
         if (gameTimer != null) gameTimer.StartTimer();
@@ -232,6 +231,7 @@ public class NoiseSpawner : MonoBehaviour
         spatialGrid.Clear();
         watchtowerPositions.Clear();
         spawnedObjects.Clear();
+        spawnedTowerTransforms.Clear();
     }
 
     private void SpawnObject(SpawnItem[] pool, float weight, Vector3 pos, float noiseValue, TerrainData data, Vector3 tSize, Vector3 tPos, float minS, float maxS)
@@ -256,6 +256,7 @@ public class NoiseSpawner : MonoBehaviour
 
         spawnedObjects.Add(obj);
     }
+
     private void TrySpawnAround(Vector3 spawnPos, float noise, TerrainData data, Vector3 terrainSize, Vector3 terrainPosition, float clearanceDistSqr)
     {
         if (prefabsAround == null || prefabsAround.Length == 0) return;
@@ -320,6 +321,7 @@ public class NoiseSpawner : MonoBehaviour
         }
         return false;
     }
+
     bool IsInClearanceZone(Vector3 pos, float clearanceDistSqr)
     {
         Vector2 pos2D = new Vector2(pos.x, pos.z);

@@ -6,7 +6,7 @@ public class GameTimer : MonoBehaviour
     public float timeLeft = 300f;
     public TextMeshProUGUI timerText;
 
-    // 1. Dodajemy referencjê do Twojego prawdziwego Managera
+    // 1. Dodajemy referencjï¿½ do Twojego prawdziwego Managera
     public EndGameManager endGameManager;
 
     private bool isGameEnded = false;
@@ -28,19 +28,19 @@ public class GameTimer : MonoBehaviour
         }
         else
         {
-            // Czas min¹³!
+            // Czas minï¿½ï¿½!
             timeLeft = 0;
             UpdateTimerUI();
             isGameEnded = true;
 
-            // 2. Wo³amy EndGameManager, ¿eby zrobi³ ca³¹ magiê z punktami i UI
+            // 2. Woï¿½amy EndGameManager, ï¿½eby zrobiï¿½ caï¿½ï¿½ magiï¿½ z punktami i UI
             if (endGameManager != null)
             {
                 endGameManager.EndGame();
             }
             else
             {
-                Debug.LogError("Brak podpiêtego EndGameManager w Timerze!");
+                Debug.LogError("Brak podpiï¿½tego EndGameManager w Timerze!");
             }
         }
     }
