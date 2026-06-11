@@ -506,6 +506,10 @@ public class GuardNoedifyAI : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (net != null)
+        {
+            SaveNetworkModel();
+        }
         if (solver != null) Noedify.DestroySolver(solver);
     }
 
