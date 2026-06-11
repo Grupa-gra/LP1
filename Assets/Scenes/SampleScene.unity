@@ -1802,6 +1802,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -30
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -2022,6 +2023,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -15
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -2753,6 +2755,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -5
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -3167,6 +3170,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: 30
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -3276,6 +3280,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: 20
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -3328,6 +3333,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -30
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -4189,6 +4195,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: 25
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -4425,6 +4432,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -10
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -4477,6 +4485,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -50
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -4733,6 +4742,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -40
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -4924,6 +4934,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: 15
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -5649,6 +5660,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: 40
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -5772,6 +5784,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: 10
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -5901,6 +5914,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -100
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -6335,6 +6349,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -10
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -6417,6 +6432,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -20
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -8433,6 +8449,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -15
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -8833,6 +8850,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: 10
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}
@@ -9086,6 +9104,7 @@ MonoBehaviour:
   popupDuration: 2
   startOffsetY: 15
   scoreValue: -10
+  scoreCount: 0
   respawnTime: 30
   growDuration: 0.5
   targetScale: {x: 1, y: 1, z: 1}

@@ -18,7 +18,7 @@ public class CollectibleItem : MonoBehaviour, IInteractable
     [SerializeField] private float startOffsetY = 15f;
 
     public int scoreValue = 10;
-
+    public int scoreCount = 0;
     public float respawnTime = 30f;
     private bool isCollected = false;
 
@@ -33,6 +33,7 @@ public class CollectibleItem : MonoBehaviour, IInteractable
 
     private void Start()
     {
+        scoreCount = 0;
         targetScale = transform.localScale;
 
         if (scoreInfo != null)
